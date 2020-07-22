@@ -1,5 +1,6 @@
 package game;
 
 public interface Collectable {
-	public void getCollected(Creature c);
+	public void getCollected(Hero hero);
+	public void getCollected(Monster monster);
 }

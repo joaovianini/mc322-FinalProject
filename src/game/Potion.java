@@ -8,10 +8,12 @@ public class Potion extends Item {
 	}
 
 	@Override
-	public void getCollected(Creature c) {
-		if (c instanceof Hero) {
-			((Hero) c).bag.addItem(this);
-		}
+	public void getCollected(Hero hero) {
+		hero.bag.addItem(this);
+	}
+
+	public void getCollected(Monster monster) {
+		monster.bag.addItem(this);
 	}
 	
 	public void use(Hero h) {

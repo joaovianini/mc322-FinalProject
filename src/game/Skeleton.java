@@ -12,6 +12,7 @@ public class Skeleton extends Monster {
 		this.rightHandWeapon = new ShortSword(this);
 		this.leftHandWeapon= null; 
 		this.armor = null;
+		this.bag = new Bag();
 	}
 
 }

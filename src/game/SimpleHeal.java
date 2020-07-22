@@ -6,33 +6,39 @@ public class SimpleHeal implements Magic {
 	public SimpleHeal() {
 		name ="Simple Heal";
 	}
+	
+	public void getCollected(Wizard wiz) {
+		wiz.addMagic(this);
+	}
+	
+	public void getCollected(Elf elf) {
+		elf.addMagic(this);
+	}
+	
+	
 	@Override
-	public void getCollected(Creature c) {
-		if (c instanceof Elf ) {
-			((Elf) c).addMagic(this);
-		}
-		else if (c instanceof Wizard) {
-			((Wizard) c).addMagic(this);
-		}
+	public void cast(Hero caster, Monster target) {
 		
 	}
-
-	@Override
-	public void cast(Creature caster, Creature target) {
+	
+	public void cast(Monster caster, Hero target) {
+		
+	}
+	
+	public void cast(Hero caster) {
+		int dices = 1;		
+			if (dices < caster.intelligencePoints) {
+				caster.healthPoints += 6;
+			}		
+	}
+	
+	public void cast(Monster caster) {
 		int dices = 1;
-		if (caster instanceof Hero) {
-			//roll dices
-			if (dices < ((Hero) caster).intelligencePoints) {
-				((Hero) caster).healthPoints += 6;
-			}
-		}
-		
-		if (caster instanceof Monster) {
-			//roll dices
-			if (dices < ((Monster) caster).intelligencePoints) {
-				((Monster) caster).healthPoints += 6;
+			if (dices < caster.intelligencePoints) {
+				caster.healthPoints += 6;
 			}
 		}
 	}
 
-}
+
+

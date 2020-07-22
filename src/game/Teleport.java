@@ -6,20 +6,35 @@ public class Teleport implements Magic {
 	public Teleport() {
 		name = "Teleport";
 	}
+	
+	public void getCollected(Wizard wiz) {
+		wiz.addMagic(this);
+	}
+	
+	public void getCollected(Elf elf) {
+		elf.addMagic(this);
+	}
+	
+	
 	@Override
-	public void getCollected(Creature c) {
-		if (c instanceof Elf ) {
-			((Elf) c).addMagic(this);
-		}
-		else if (c instanceof Wizard) {
-			((Wizard) c).addMagic(this);
-		}
+	public void cast(Hero caster, Monster target) {
+		
+	}
+	
+	@Override
+	public void cast(Monster caster, Hero target) {
+		
 	}
 
 	@Override
-	public void cast(Creature caster, Creature target) {
+	public void cast(Monster monster) {
+		
+	}
+	
+	@Override
+	public void cast(Hero hero) {
 		System.out.print("Escolha quantas casas pular: \n");
-		//o caster teleporta para alguma casa que esteja no seu campo de visão.
+		//o caster teleporta para alguma casa que esteja no seu campo de visï¿½o.
 	}
 
 }

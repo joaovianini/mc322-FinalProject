@@ -15,6 +15,7 @@ public class SkeletonWizard extends Monster {
 		this.rightHandWeapon = new ShortSword(this);
 		this.leftHandWeapon= null; 
 		this.armor = null;
+		this.bag = new Bag();
 		magics = new ArrayList<Magic>();
 		MagicMissile m = new MagicMissile();
 		magics.add(m);

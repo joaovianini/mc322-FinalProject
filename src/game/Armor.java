@@ -5,7 +5,11 @@ public class Armor extends Item implements Collectable {
 	protected boolean  disappearAfterUse;
 
 	@Override
-	public void getCollected(Creature c) {
+	public void getCollected(Hero hero) {
+	}
+	@Override
+	public void getCollected(Monster monster) {
+		
 	}
 
 }

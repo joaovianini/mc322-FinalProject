@@ -23,11 +23,12 @@ public final class BroadSword extends Weapon {
 	}
 	
 	@Override
-	public void getCollected(Creature creature) {
-		if(creature instanceof Hero) {
-			((Hero) creature).bag.addItem(this);
-		}
+	public void getCollected(Hero hero) {
+		hero.bag.addItem(this);
+	}
 
+	public void getCollected(Monster monster) {	
+		monster.bag.addItem(this);
 	}
 
 }

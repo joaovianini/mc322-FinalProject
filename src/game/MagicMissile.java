@@ -6,33 +6,49 @@ public class MagicMissile implements Magic {
 	public MagicMissile() {
 		name = "Magic Missile";
 	}
+	
+	public void getCollected(Wizard wiz) {
+		wiz.addMagic(this);
+	}
+	
+	public void getCollected(Elf elf) {
+		elf.addMagic(this);
+	}
+	
+
 	@Override
-	public void getCollected(Creature c) {
-		if (c instanceof Elf ) {
-			((Elf) c).addMagic(this);
+	public void cast(Hero caster, Monster target) {
+
+		int dices = 1;
+			//roll dices
+		if (dices < caster.intelligencePoints) {
+			target.healthPoints -= 6;
+			//+3 de dano em adj
 		}
-		else if (c instanceof Wizard) {
-			((Wizard) c).addMagic(this);
+
+}
+
+	@Override
+	public void cast(Monster caster, Hero target) {
+		int dices = 1;
+			//roll dices
+			
+		if (dices < caster.intelligencePoints) {
+			target.healthPoints -= 6;
+			//nao sera preciso dano adj, ja que havera apenas 1 player no mapa
 		}
 	}
 
 	@Override
-	public void cast(Creature caster, Creature target) {
-		int dices = 1;
-		if (caster instanceof Hero && target instanceof Monster) {
-			//roll dices
-			if (dices < ((Hero) caster).intelligencePoints) {
-				((Monster) target).healthPoints -= 6;
-			}
-		}
+	public void cast(Hero hero) {
 		
-		if (caster instanceof Monster && target instanceof Hero) {
-			//roll dices
-			if (dices < ((Monster) caster).intelligencePoints) {
-				((Hero) target).healthPoints -= 6;
-			}
-		}
-
+	}
+	
+	@Override
+	public void cast(Monster monster) {
+		
 	}
 
 }
+
+

@@ -1,5 +1,9 @@
 package game;
 
-public interface Magic extends Collectable {
-	public void cast(Creature caster, Creature target);
+public interface Magic{
+	public void cast(Hero caster, Monster target);
+	public void cast(Monster caster, Hero target);
+	public void cast(Monster monster);
+	public void cast(Hero hero);
+
 }

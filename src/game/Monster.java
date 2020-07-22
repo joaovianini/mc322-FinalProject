@@ -9,6 +9,7 @@ public abstract class Monster extends MapItem implements Creature {
 	protected Weapon leftHandWeapon;
 	protected Armor armor;
 	protected boolean controlled;
+	protected Bag bag;
 
 	@Override
 	public void attack(Creature creature) {
