@@ -13,4 +13,11 @@ public class Barbarian extends Hero {
 		leftHandWeapon = null; 
 	}
 
+	@Override
+	public String toString() {
+		String string = "B";
+		return string;
+	}
+
+	
 }

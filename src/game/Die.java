@@ -10,7 +10,7 @@ public class Die {
 
 	}
 	
-	public DieFaces rollDice() {
+	public DieFaces rollRedDice() {
 		int face;
 		face = 1 +  random.nextInt(6);
 		switch(face) {
@@ -34,6 +34,11 @@ public class Die {
 			break;
 		}
 		return dieFaces;
+	}
+	
+	public int rollNumberDice() {
+		int face = 1 + random.nextInt(6);
+		return face;
 	}
 	
 }

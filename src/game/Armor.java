@@ -1,6 +1,6 @@
 package game;
 
-public class Armor extends Item implements Collectable {
+public abstract class Armor extends Item implements Collectable {
 	protected int extraDefenseDices;
 	protected boolean  disappearAfterUse;
 
