@@ -190,6 +190,10 @@ public class Map {
 		return doors;
 	}
 	
+	public void buildMapFromFile() {
+		
+	}
+	
 
 	
 	public void printMap() {
@@ -199,13 +203,6 @@ public class Map {
 			}
 			System.out.printf("\n");
 		}
-	}
-	
-	public static void main(String[] args) {
-		Map map;
-		map = new Map();
-		map.buildDefautMap();
-		map.printMap();
 	}
 	
 }
