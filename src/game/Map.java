@@ -3,11 +3,12 @@ package game;
 import java.util.ArrayList;
 
 public class Map {
-	private MapItem[][] map;
+	protected MapItem[][] map;
 	private int numberRooms;
 	private MapItem[][] visibilityByRoom;
 	protected ArrayList<Door> doors;
 	protected Hero hero;
+	
 	
 	public Map() {
 		map = new MapItem[28][37];
@@ -213,6 +214,14 @@ public class Map {
 		
 	}
 	
+	
+	public MapItem getItem(int x, int y) {
+		return map[x][y];
+	}
+	
+	public int getMapWidth() {
+		return map.length;
+	}
 
 	
 	public void printMap() {
