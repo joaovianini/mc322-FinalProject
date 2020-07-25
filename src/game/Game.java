@@ -8,7 +8,7 @@ public class Game {
 	private static SecureRandom random = new SecureRandom();
 	private ArrayList<Skeleton> skeletons;
 	private ArrayList<SkeletonWizard> skeletonWizards;
-	private ArrayList<Goblins> goblins;
+	private ArrayList<Goblin> goblins;
 	private Map map;
 	private Die die;
 	private boolean exit;
@@ -19,7 +19,7 @@ public class Game {
 	public Game() {
 		skeletons = new ArrayList<Skeleton>();
 		skeletonWizards = new ArrayList<SkeletonWizard>();
-		goblins = new ArrayList<Goblins>();
+		goblins = new ArrayList<Goblin>();
 		map = null;
 		die = new Die();
 		exit = false;
@@ -82,7 +82,7 @@ public class Game {
 			System.out.println("2. Depois de se mover?");
 			System.out.println();
 			System.out.println("Digite o digito da opcao escolhida: ");
-			option = scan.next();
+			option = scan.nextInt();
 			if(option != 1 && option != 2) {
 				System.out.println("Você escolheu novamente uma opcao invalida!");
 				System.out.println("Você deverá realizar sua ação agora.");
@@ -296,7 +296,9 @@ public class Game {
 			System.out.println("Pressione q a qualquer momento durante um movimento para encerrar o jogo");
 			map = new Map();
 			map.buildDefautMap();
+			randomInsertMonsters();
 			map.addHero(heroi, nome);
+			map.printMap();
 			while(!exit) {
 				readInput();
 				//map.printMap();
@@ -318,7 +320,115 @@ public class Game {
 		
 	}
 	
+	private int getRandomX() {
+		return random.nextInt(map.map.length);
+	}
+	
+	private int getRandomY() {
+		return random.nextInt(map.map[0].length);
+	}
+	
+	
 	private void randomInsertMonsters() {
+		int numberSkeletonWizards;
+		int numberSkeletons;
+		int numberGoblins;
+		int tempX;
+		int tempY;
+		
+		numberSkeletons = 1 + random.nextInt(10);
+		numberGoblins = 1 + random.nextInt(5);
+		numberSkeletonWizards = 1 + random.nextInt(5);
+		
+		for(int i=0; i<numberSkeletons;i++) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				skeletons.add(new Skeleton(tempX,tempY));
+				map.map[tempX][tempY] = skeletons.get(i);	
+			}
+			else if(tempX != map.map.length && map.isPositionEmpty(tempX+1, tempY)) {
+				skeletons.add(new Skeleton(tempX+1,tempY));
+				map.map[tempX+1][tempY] = skeletons.get(i);
+				
+			}
+			else if(tempX != 0 && map.isPositionEmpty(tempX-1, tempY)) {
+				skeletons.add(new Skeleton(tempX-1,tempY));
+				map.map[tempX-1][tempY] = skeletons.get(i);		
+			}
+			else if(tempY != map.map[0].length && map.isPositionEmpty(tempX, tempY+1)) {
+				skeletons.add(new Skeleton(tempX+1,tempY));
+				map.map[tempX][tempY+1] = skeletons.get(i);
+				
+			}
+			else if(tempY != 0 && map.isPositionEmpty(tempX, tempY-1)) {
+				skeletons.add(new Skeleton(tempX,tempY-1));
+				map.map[tempX][tempY-1] = skeletons.get(i);		
+			}
+			else {
+				i--;
+			}
+		}
+		
+		for(int i=0; i<numberSkeletonWizards;i++) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				skeletonWizards.add(new SkeletonWizard(tempX,tempY));
+				map.map[tempX][tempY] = skeletons.get(i);	
+			}
+			else if(tempX != map.map.length && map.isPositionEmpty(tempX+1, tempY)) {
+				skeletonWizards.add(new SkeletonWizard(tempX+1,tempY));
+				map.map[tempX+1][tempY] = skeletonWizards.get(i);
+				
+			}
+			else if(tempX != 0 && map.isPositionEmpty(tempX-1, tempY)) {
+				skeletonWizards.add(new SkeletonWizard(tempX-1,tempY));
+				map.map[tempX-1][tempY] = skeletonWizards.get(i);		
+			}
+			else if(tempY != map.map[0].length && map.isPositionEmpty(tempX, tempY+1)) {
+				skeletonWizards.add(new SkeletonWizard(tempX+1,tempY));
+				map.map[tempX][tempY+1] = skeletonWizards.get(i);
+				
+			}
+			else if(tempY != 0 && map.isPositionEmpty(tempX, tempY-1)) {
+				skeletonWizards.add(new SkeletonWizard(tempX,tempY-1));
+				map.map[tempX][tempY-1] = skeletonWizards.get(i);		
+			}
+			else {
+				i--;
+			}
+		}
+		
+		for(int i=0; i<numberGoblins;i++) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				goblins.add(new Goblin(tempX,tempY));
+				map.map[tempX][tempY] = goblins.get(i);	
+			}
+			else if(tempX != map.map.length && map.isPositionEmpty(tempX+1, tempY)) {
+				goblins.add(new Goblin(tempX+1,tempY));
+				map.map[tempX+1][tempY] = goblins.get(i);
+				
+			}
+			else if(tempX != 0 && map.isPositionEmpty(tempX-1, tempY)) {
+				goblins.add(new Goblin(tempX-1,tempY));
+				map.map[tempX-1][tempY] = goblins.get(i);		
+			}
+			else if(tempY != map.map[0].length && map.isPositionEmpty(tempX, tempY+1)) {
+				goblins.add(new Goblin(tempX+1,tempY));
+				map.map[tempX][tempY+1] = goblins.get(i);
+				
+			}
+			else if(tempY != 0 && map.isPositionEmpty(tempX, tempY-1)) {
+				goblins.add(new Goblin(tempX,tempY-1));
+				map.map[tempX][tempY-1] = goblins.get(i);		
+			}
+			else {
+				i--;
+			}
+		}
 		
 		
 	}

@@ -21,4 +21,11 @@ public class SkeletonWizard extends Monster {
 		magics.add(m);
 	}
 
+	@Override
+	public String toString() {
+		return " R ";
+	}
+
+	
+	
 }

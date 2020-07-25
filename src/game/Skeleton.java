@@ -15,4 +15,10 @@ public class Skeleton extends Monster {
 		this.bag = new Bag();
 	}
 
+	@Override
+	public String toString() {
+		return " S ";
+	}
+
+	
 }

@@ -1,8 +1,13 @@
 package game;
 
-public class Goblins extends Monster {
+public class Goblin extends Monster {
 
-	public Goblins(int x, int y) {
+	@Override
+	public String toString() {
+		return " G ";
+	}
+
+	public Goblin(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.healthPoints = 5;

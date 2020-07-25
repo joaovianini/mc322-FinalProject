@@ -233,4 +233,8 @@ public class Map {
 		}
 	}
 	
+	public boolean isPositionEmpty(int x, int y) {
+		if (map[x][y].toString().equals("   ")) return true;
+		else return false;
+	}
 }
