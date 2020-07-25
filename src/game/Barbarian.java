@@ -15,7 +15,7 @@ public class Barbarian extends Hero {
 
 	@Override
 	public String toString() {
-		String string = "B";
+		String string = " B ";
 		return string;
 	}
 

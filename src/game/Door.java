@@ -30,7 +30,7 @@ public class Door extends MapItem {
 	
 	@Override
 	public String toString() {
-		return " P ";
+		return " U ";
 	}
 
 

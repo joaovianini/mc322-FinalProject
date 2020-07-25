@@ -12,5 +12,10 @@ public class Dwarf extends Hero {
 		rightHandWeapon = new ShortSword(this);
 		leftHandWeapon = null; 
 	}
-
+	
+	@Override
+	public String toString() {
+		String string = " D ";
+		return string;
+	}
 }

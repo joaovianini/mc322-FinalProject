@@ -7,6 +7,7 @@ public class Map {
 	private int numberRooms;
 	private MapItem[][] visibilityByRoom;
 	protected ArrayList<Door> doors;
+	protected Hero hero;
 	
 	public Map() {
 		map = new MapItem[28][37];
@@ -21,6 +22,24 @@ public class Map {
 		visibilityByRoom = null;
 		doors = new ArrayList<Door>();
 	}
+	
+	public void addHero(int hero, String name) {
+		switch(hero) {
+		case 1:
+			map[25][18] = new Barbarian(25, 18, name);
+			break;
+		case 2:
+			map[25][18] = new Elf(25, 18, name);
+			break;
+		case 3:
+			map[25][18] = new Dwarf(25, 18, name);
+			break;
+		case 4:
+			map[25][18] = new Wizard(25, 18, name);
+			break;
+		}
+	}
+	
 
 	public void buildDefautMap() {
 		//Desenho das paredes do tabuleiro padrão de Hero Quest

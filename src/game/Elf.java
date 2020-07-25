@@ -21,4 +21,10 @@ public class Elf extends Hero {
 	public void addMagic(Magic m) {
 		this.magics.add(m);
 	}
+	
+	@Override
+	public String toString() {
+		String string = " E ";
+		return string;
+	}
 }
