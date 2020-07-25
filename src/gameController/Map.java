@@ -1,6 +1,9 @@
-package game;
+package gameController;
 
 import java.util.ArrayList;
+
+
+import game.*;
 
 public class Map {
 	protected MapItem[][] map;
@@ -24,22 +27,6 @@ public class Map {
 		doors = new ArrayList<Door>();
 	}
 	
-	public void addHero(int hero, String name) {
-		switch(hero) {
-		case 1:
-			map[25][18] = new Barbarian(25, 18, name);
-			break;
-		case 2:
-			map[25][18] = new Elf(25, 18, name);
-			break;
-		case 3:
-			map[25][18] = new Dwarf(25, 18, name);
-			break;
-		case 4:
-			map[25][18] = new Wizard(25, 18, name);
-			break;
-		}
-	}
 	
 
 	public void buildDefautMap() {

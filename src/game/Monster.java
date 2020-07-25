@@ -24,7 +24,7 @@ public abstract class Monster extends MapItem implements Creature {
 	}
 
 	@Override
-	public void move(char direction) {
+	public void move(Direction direction) {
 		// TODO Auto-generated method stub
 
 	}

@@ -20,5 +20,9 @@ public class Skeleton extends Monster {
 		return " S ";
 	}
 
+	@Override
+	public void move(Direction direction) {
+		
+	}
 	
 }

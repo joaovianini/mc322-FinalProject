@@ -1,7 +1,11 @@
-package game;
+package gameController;
 
-import java.util.*;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import game.*;
 
 public class Game {
 	
@@ -15,6 +19,11 @@ public class Game {
 	private Scanner roll;
 	private Scanner scan;
 	private HeroType type; 
+	private Barbarian barbarian;
+	private Elf elf;
+	private Dwarf dwarf;
+	private Wizard wizard;
+	
 	
 	public Game() {
 		skeletons = new ArrayList<Skeleton>();
@@ -24,6 +33,10 @@ public class Game {
 		die = new Die();
 		exit = false;
 		scan = new Scanner(System.in);
+		barbarian = null;
+		elf = null;
+		dwarf = null;
+		wizard = null;
 	}
 	
 	public void movement() {
@@ -297,7 +310,20 @@ public class Game {
 			map = new Map();
 			map.buildDefautMap();
 			randomInsertMonsters();
-			map.addHero(heroi, nome);
+			switch(type) { 
+			case BARBARIAN:
+				barbarian = new Barbarian(25,18,nome);
+				map.map[25][18] = barbarian;
+			case ELF:
+				elf = new Elf(25,18,nome);
+				map.map[25][18] = elf;
+			case DWARF: 
+				dwarf = new Dwarf(25,18,nome);
+				map.map[25][18] = dwarf;
+			case WIZARD:
+				wizard = new Wizard(25,18,nome);
+				map.map[25][18] = wizard;
+			}
 			map.printMap();
 			while(!exit) {
 				readInput();
@@ -336,9 +362,9 @@ public class Game {
 		int tempX;
 		int tempY;
 		
-		numberSkeletons = 1 + random.nextInt(10);
-		numberGoblins = 1 + random.nextInt(5);
-		numberSkeletonWizards = 1 + random.nextInt(5);
+		numberSkeletons = 10;
+		numberGoblins = 5;
+		numberSkeletonWizards = 4;
 		
 		for(int i=0; i<numberSkeletons;i++) {
 			tempX = getRandomX();
