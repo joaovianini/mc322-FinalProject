@@ -19,10 +19,9 @@ public class Game {
 	private Scanner roll;
 	private Scanner scan;
 	private HeroType type; 
-	private Barbarian barbarian;
-	private Elf elf;
-	private Dwarf dwarf;
-	private Wizard wizard;
+	private Hero hero;
+	private EmptySpace emptySpace;
+	
 	
 	
 	public Game() {
@@ -33,14 +32,12 @@ public class Game {
 		die = new Die();
 		exit = false;
 		scan = new Scanner(System.in);
-		barbarian = null;
-		elf = null;
-		dwarf = null;
-		wizard = null;
+		hero = null;
+		emptySpace = new EmptySpace();
 	}
 	
 	public void movement() {
-		int redDiceResult1, redDiceResult2, result;
+		int redDiceResult1, redDiceResult2, result, step;
 		char direction;
 		System.out.println("Pressione qualquer tecla pra rolar os dados");
 		scan.nextLine();
@@ -49,21 +46,48 @@ public class Game {
 		result = redDiceResult1 + redDiceResult2;
 		System.out.println("Dado 1: "+ redDiceResult1 + " Dado 2: " + redDiceResult2);
 		System.out.println("Voce pode andar até " + result + " casas.");
-		System.out.print("Mova usando as teclas de direção 'a' 'w' 's' e 'd' e pressione 'e' caso queira parar"); 
-		for(int i=0; i<result; i++) {
-			direction = scan.next().charAt(0);
-			if (direction == 'e') {
-				break;
-			}
+		System.out.print("Escolha a dire��o do movimento utilizando as teclas 'a' 'w' 's' e 'd': "); 	
+		direction = scan.next().charAt(0);
+		System.out.print("Quantas casas deseja andar? ");
+		step = scan.nextInt();
+		switch(direction) {
+		case 'a':
+			if ((map.isPositionEmpty(hero.getPositionX(), hero.getPositionY()-step)) && hero.getPositionY()-step >= 0 ){
+				map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
+				hero.setPosition(hero.getPositionX(), hero.getPositionY()-step);//muda posicao heroi
+				map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
+			}else {System.out.println("Posi��o invalida ou ocupada."); }
+			break;
+		case 'w':
+			if ((map.isPositionEmpty(hero.getPositionX()-step, hero.getPositionY())) &&  hero.getPositionX()-step >= 0) {
+				map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
+				hero.setPosition(hero.getPositionX()-step, hero.getPositionY());//muda posicao heroi
+				map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
+			}else {System.out.println("Posi��o invalida ou ocupada."); }
+			break;
+		case 'd':
+			if ((map.isPositionEmpty(hero.getPositionX(), hero.getPositionY()+step)) && hero.getPositionY()+step <= 74 ){
+				map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
+				hero.setPosition(hero.getPositionX(), hero.getPositionY()+step);//muda posicao heroi
+				map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
+			}else {System.out.println("Posi��o invalida ou ocupada."); }
+			break;
+		case 's':
+			if ((map.isPositionEmpty(hero.getPositionX()+step, hero.getPositionY())) && hero.getPositionX()+step <= 28){
+				map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
+				hero.setPosition(hero.getPositionX()+step, hero.getPositionY());//muda posicao heroi
+				map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
+			}else {System.out.println("Posi��o invalida ou ocupada."); }
+			break;
 		}
+			
 	}
 	
 	public void readInput() {
 		int option;
-		System.out.println("Você pode realizar uma ação antes ou depois de se mover.");
-		System.out.println("Você prefere realizar sua ação:");
-		System.out.println("1. Antes de se mover?");
-		System.out.println("2. Depois de se mover?");
+		System.out.println("Escolha:");
+		System.out.println("1. Realizar a��o");
+		System.out.println("2. Mover");
 		System.out.println();
 		System.out.println("Digite o digito da opcao escolhida: ");
 		try {
@@ -74,10 +98,9 @@ public class Game {
 		}
 		catch(IllegalArgumentException e) {
 			System.out.println("Opção Inválida. Tente novamente!");
-			System.out.println("Você pode realizar uma ação antes ou depois de se mover.");
-			System.out.println("Você prefere realizar sua ação:");
-			System.out.println("1. Antes de se mover?");
-			System.out.println("2. Depois de se mover?");
+			System.out.println("Escolha:");
+			System.out.println("1. Realizar a��o");
+			System.out.println("2. Mover");
 			System.out.println();
 			System.out.println("Digite o digito da opcao escolhida: ");
 			option = scan.nextInt();
@@ -89,10 +112,9 @@ public class Game {
 		}
 		catch(InputMismatchException e) {
 			System.out.println("Opção Inválida. Tente novamente!");
-			System.out.println("Você pode realizar uma ação antes ou depois de se mover.");
-			System.out.println("Você prefere realizar sua ação:");
-			System.out.println("1. Antes de se mover?");
-			System.out.println("2. Depois de se mover?");
+			System.out.println("Escolha:");
+			System.out.println("1. Realizar a��o");
+			System.out.println("2. Mover");
 			System.out.println();
 			System.out.println("Digite o digito da opcao escolhida: ");
 			option = scan.nextInt();
@@ -105,11 +127,9 @@ public class Game {
 		
 		if(option == 1) {
 			action();
-			movement();
 		}
 		else if(option == 2) {
 			movement();
-			action();
 		}
 	}
 	
@@ -185,24 +205,24 @@ public class Game {
 		System.out.println("Escolha um tipo de heroi:");
 		System.out.println("|1 - Barbaro|  |2 - Elfo|  |3 - Anao|  |4 - Mago|");
 		try{
-		heroi = scan.nextInt();
-		
-		switch(heroi) {
-		case 1:
-			type = HeroType.BARBARIAN;
-			break;
-		case 2:
-			type = HeroType.ELF;
-			break;
-		case 3:
-			type = HeroType.DWARF;
-			break;
-		case 4:
-			type = HeroType.WIZARD;
-			break;
-		default:
-			throw new IllegalArgumentException("Tipo Inválido de Herói.");
-		}
+			heroi = scan.nextInt();
+			
+			switch(heroi) {
+			case 1:
+				type = HeroType.BARBARIAN;
+				break;
+			case 2:
+				type = HeroType.ELF;
+				break;
+			case 3:
+				type = HeroType.DWARF;
+				break;
+			case 4:
+				type = HeroType.WIZARD;
+				break;
+			default:
+				throw new IllegalArgumentException("Tipo Inválido de Herói.");
+			}
 		}
 		catch(IllegalArgumentException e) {
 			System.out.println("Você escolheu um tipo inválido de heroi");
@@ -312,20 +332,26 @@ public class Game {
 			randomInsertMonsters();
 			switch(type) { 
 			case BARBARIAN:
-				barbarian = new Barbarian(25,18,nome);
-				map.map[25][18] = barbarian;
+				hero = new Barbarian(25,18,nome);
+				map.map[25][18] = hero;
+				break;
 			case ELF:
-				elf = new Elf(25,18,nome);
-				map.map[25][18] = elf;
+				hero = new Elf(25,18,nome);
+				map.map[25][18] = hero;
+				break;
 			case DWARF: 
-				dwarf = new Dwarf(25,18,nome);
-				map.map[25][18] = dwarf;
+				hero = new Dwarf(25,18,nome);
+				map.map[25][18] = hero;
+				break;
 			case WIZARD:
-				wizard = new Wizard(25,18,nome);
-				map.map[25][18] = wizard;
+				hero = new Wizard(25,18,nome);
+				map.map[25][18] = hero;
+				break;
 			}
-			map.printMap();
+			
+			
 			while(!exit) {
+				map.printMap();
 				readInput();
 				//map.printMap();
 			}

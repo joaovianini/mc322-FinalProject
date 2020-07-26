@@ -10,7 +10,7 @@ public class Map {
 	private int numberRooms;
 	private MapItem[][] visibilityByRoom;
 	protected ArrayList<Door> doors;
-	protected Hero hero;
+
 	
 	
 	public Map() {
