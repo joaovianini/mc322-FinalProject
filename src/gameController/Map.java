@@ -27,8 +27,55 @@ public class Map {
 		doors = new ArrayList<Door>();
 	}
 	
+	public boolean isThereABlockX(int x, int y1, int y2) {
+		boolean obstacle = false;
+		if (y1 < y2) {
+			for(int i=y1; i<y2; i++) {
+				if (!map[x][i].isAccessible()) {
+					obstacle = true;
+				}
+			}
+		return obstacle;
+		}
+		else {
+			for(int i=y2; i<y1; i++) {
+				if (!map[x][i].isAccessible()) {
+					obstacle = true;
+				}
+			}
+		return obstacle;
+		}
+			
+	}
 	
-
+	public boolean isThereABlockY(int y, int x1, int x2) {
+		boolean obstacle = false;
+		if (x1 < x2) {
+			for(int i=x1; i<x2; i++) {
+				if (!map[i][y].isAccessible()) {
+					obstacle = true;
+				}
+			}
+		return obstacle;
+		}
+		else {
+			for(int i=x2; i<x1; i++) {
+				if (!map[i][y].isAccessible()) {
+					obstacle = true;
+				}
+			}
+		return obstacle;
+		}
+			
+	}
+		
+	
+	
+	public boolean isACreature(int x, int y) {
+		return map[x][y].isCreature();
+	}
+	
+	
 	public void buildDefautMap() {
 		//Desenho das paredes do tabuleiro padrão de Hero Quest
 		for(int i=0; i<map.length; i++) {
@@ -210,18 +257,21 @@ public class Map {
 		return map.length;
 	}
 
+	public int getMapHeight() {
+		return map[0].length;
+	}
 	
 	public void printMap() {
 		for(int i=0; i<map.length; i++) {
 			for (int j=0; j<map[i].length; j++) {
-				System.out.print(map[i][j]);
+				System.out.print(map[i][j].toString());
 			}
 			System.out.printf("\n");
 		}
 	}
 	
 	public boolean isPositionEmpty(int x, int y) {
-		if (map[x][y].toString().equals("   ")) return true;
+		if (map[x][y] instanceof EmptySpace) return true;
 		else return false;
 	}
 }

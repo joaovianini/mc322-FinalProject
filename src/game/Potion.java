@@ -5,7 +5,22 @@ public class Potion extends Item {
 	
 	public Potion() {
 		this.name = "Potion";
+		creature = false;
 	}
+	
+	public Potion(int x, int y) {
+		setPosition(x,y);
+		this.name = "Potion";
+		creature = false;
+	}
+	
+	public Potion(int x, int y, int room) {
+		setPosition(x,y);
+		this.name = "Potion";
+		creature = false;
+		this.room = room;
+	}
+
 
 	@Override
 	public void getCollected(Hero hero) {

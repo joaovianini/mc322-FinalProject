@@ -11,6 +11,22 @@ public class Barbarian extends Hero {
 		intelligencePoints = 2;
 		rightHandWeapon = new BroadSword(this);
 		leftHandWeapon = null; 
+		bag = new Bag();
+		creature = true;
+	}
+	
+	public Barbarian(int x, int y, String name, int room) {
+		setPosition(x,y);
+		this.name = name;
+		numberAttackDices = 3;
+		numberDefenseDices = 2;
+		healthPoints = 8;
+		intelligencePoints = 2;
+		rightHandWeapon = new BroadSword(this);
+		leftHandWeapon = null; 
+		bag = new Bag();
+		creature = true;
+		this.room = room;
 	}
 
 	@Override

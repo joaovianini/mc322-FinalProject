@@ -14,10 +14,31 @@ public class Goblin extends Monster {
 		this.intelligencePoints = 0;
 		this.numberAttackDices = 1;
 		this.numberDefenseDices = 1;
-		this.rightHandWeapon = new Daggers(2, this);
+		this.rightHandWeapon = new Daggers(this);
 		this.leftHandWeapon= null; 
 		this.armor = null;
 		this.bag = new Bag();
+		this.bag.addItem(new Daggers(this));
+		creature = true;
+		accessible = false;
+		
 	}
+	
+	public Goblin(int x, int y, int room) {
+		this.x = x;
+		this.y = y;
+		this.healthPoints = 5;
+		this.intelligencePoints = 0;
+		this.numberAttackDices = 1;
+		this.numberDefenseDices = 1;
+		this.rightHandWeapon = new Daggers(this);
+		this.leftHandWeapon= null; 
+		this.armor = null;
+		this.bag = new Bag();
+		this.bag.addItem(new Daggers(this));
+		creature = true;
+		this.room = room;
+	}
+
 
 }

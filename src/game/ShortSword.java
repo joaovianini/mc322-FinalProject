@@ -8,6 +8,7 @@ public final class ShortSword extends Weapon {
 		disappearAfterUse = false;
 		usesTwoHands = false;
 		extraAtackDices = 2;
+		creature = false;
 	}
 
 	public ShortSword(Monster monster) {
@@ -15,6 +16,26 @@ public final class ShortSword extends Weapon {
 		disappearAfterUse = false;
 		usesTwoHands = false;
 		extraAtackDices = 2;
+		creature = false;
+	}
+	
+	public ShortSword(int x, int y) {
+		setPosition(x,y);
+		owner = null;
+		disappearAfterUse = false;
+		usesTwoHands = false;
+		extraAtackDices = 2;
+		creature = false;
+	}
+	
+	public ShortSword(int x, int y, int room) {
+		setPosition(x,y);
+		owner = null;
+		disappearAfterUse = false;
+		usesTwoHands = false;
+		extraAtackDices = 2;
+		creature = false;
+		this.room = room;
 	}
 	
 	public ShortSword() {
@@ -22,6 +43,7 @@ public final class ShortSword extends Weapon {
 		disappearAfterUse = false;
 		usesTwoHands = false;
 		extraAtackDices = 2;
+		creature = false;
 	}
 	
 	

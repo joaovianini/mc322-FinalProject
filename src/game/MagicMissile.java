@@ -1,10 +1,25 @@
 package game;
 
-public class MagicMissile implements Magic {
+public class MagicMissile extends MapItem implements Magic {
 	protected String name;
 
 	public MagicMissile() {
 		name = "Magic Missile";
+		creature = false;
+	}
+	
+	public MagicMissile(int x, int y) {
+		setPosition(x,y);
+		name = "Magic Missile";
+		creature = false;
+	}
+	
+	public MagicMissile(int x, int y, int room) {
+		setPosition(x,y);
+		name = "Magic Missile";
+		creature = false;
+		room = room;
+		
 	}
 	
 	public void getCollected(Wizard wiz) {

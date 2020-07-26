@@ -2,15 +2,33 @@ package game;
 
 public class MapItem {
 	protected int x;
-		protected int y;
+	protected int y;
+	protected int room;
 	protected boolean accessible;
 	protected boolean visible;
+	protected boolean creature;
 	
 	public MapItem() {
 		x = 0;
 		y = 0;
 		accessible = true;
 		visible = true;
+	}
+
+	public int getRoom() {
+		return room;
+	}
+
+	public void setRoom(int room) {
+		this.room = room;
+	}
+
+	public boolean isCreature() {
+		return creature;
+	}
+
+	public void setCreature(boolean creature) {
+		this.creature = creature;
 	}
 
 	public MapItem(int x, int y) {

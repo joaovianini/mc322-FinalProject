@@ -7,6 +7,8 @@ public class Wall extends MapItem {
 		setPosition(x,y);
 		visible = true;
 		accessible = false; 
+		setCreature(false);
+		room = -1;
 		
 	}
 

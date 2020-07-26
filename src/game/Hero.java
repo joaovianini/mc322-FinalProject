@@ -29,5 +29,10 @@ public abstract class Hero extends MapItem implements Creature {
 		// TODO Auto-generated method stub
 
 	}
+	
+
+	public Bag getBag() {
+		return this.bag;
+	}
 
 }

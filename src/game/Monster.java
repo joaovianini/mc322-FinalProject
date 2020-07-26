@@ -28,5 +28,10 @@ public abstract class Monster extends MapItem implements Creature {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public String toString() {
+		return "cuu";
+		
+	}
 
 }

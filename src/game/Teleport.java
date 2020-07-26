@@ -1,10 +1,24 @@
 package game;
 
-public class Teleport implements Magic {
+public class Teleport extends MapItem implements Magic {
 	protected String name;
 	
 	public Teleport() {
 		name = "Teleport";
+		setCreature(false);
+	}
+	
+	public Teleport(int x, int y) {
+		name = "Teleport";
+		setCreature(false);
+		setPosition(x,y);
+	}
+	
+	public Teleport(int x, int y, int room) {
+		name = "Teleport";
+		setCreature(false);
+		setPosition(x,y);
+		this.room = room;
 	}
 	
 	public void getCollected(Wizard wiz) {

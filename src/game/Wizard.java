@@ -5,16 +5,35 @@ public class Wizard extends Hero {
 	private ArrayList<Magic> magics;
 	
 	public Wizard(int x, int y, String name) {
-				setPosition(x,y);
-				this.name = name;
-				numberAttackDices = 1;
-				numberDefenseDices = 2;
-				healthPoints = 4;
-				intelligencePoints = 6;
-				rightHandWeapon = new Daggers(3, this);
-				leftHandWeapon = null; 
-				magics = new ArrayList<Magic>();
-			}
+		setPosition(x,y);
+		this.name = name;
+		numberAttackDices = 1;
+		numberDefenseDices = 2;
+		healthPoints = 4;
+		intelligencePoints = 6;
+		rightHandWeapon = new Daggers(this);
+		leftHandWeapon = new Daggers(this); 
+		magics = new ArrayList<Magic>();
+		bag = new Bag();
+		bag.addItem(new Daggers(this));
+		setCreature(true);
+	}
+	
+	public Wizard(int x, int y, String name, int room) {
+		setPosition(x,y);
+		this.name = name;
+		numberAttackDices = 1;
+		numberDefenseDices = 2;
+		healthPoints = 4;
+		intelligencePoints = 6;
+		rightHandWeapon = new Daggers(this);
+		leftHandWeapon = new Daggers(this); 
+		magics = new ArrayList<Magic>();
+		bag = new Bag();
+		bag.addItem(new Daggers(this));
+		setCreature(true);
+		this.room = room;
+	}
 	public void addMagic(Magic m) {
 		this.magics.add(m);
 	}

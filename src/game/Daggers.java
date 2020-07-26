@@ -1,21 +1,41 @@
 package game;
 
 public class Daggers extends Weapon {
-	protected int numberofDaggers;
-	//as daggers dao +1 dado atk e quebram ap�s o uso, sendo n o numero de adagas disponiveis;
+	//as daggers dao +1 dado atk e quebram ap�s o uso.
 	
-	public Daggers(int n, Creature c) {
+	public Daggers(Creature c) {
 		owner = c;
 		extraAtackDices = 1;
 		disappearAfterUse = true;
 		usesTwoHands = false;
-		numberofDaggers = n;
+		creature = false;
 	}
-	public Daggers(int n) {
+	
+	public Daggers(int x, int y) {
+		setPosition(x,y);
 		owner = null;
 		extraAtackDices = 1;
 		disappearAfterUse = true;
 		usesTwoHands = false;
+		creature = false;
+	}
+	
+	public Daggers(int x, int y, int room) {
+		setPosition(x,y);
+		owner = null;
+		extraAtackDices = 1;
+		disappearAfterUse = true;
+		usesTwoHands = false;
+		creature = false;
+		this.room = room;
+	}
+	
+	public Daggers() {
+		owner = null;
+		extraAtackDices = 1;
+		disappearAfterUse = true;
+		usesTwoHands = false;
+		creature = false;
 	}
 	@Override
 	public void getCollected(Hero hero) {

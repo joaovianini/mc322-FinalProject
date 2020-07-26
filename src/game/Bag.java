@@ -21,4 +21,15 @@ public class Bag {
 	public int getBagSize() {
 		return list.size();
 	}
+
+
+public void printBag() {
+	System.out.printf("| BAG | %d itens |:", list.size());
+	for (int i = 0; i<list.size();i++) {
+		System.out.printf(" (%d - %s) ", i, list.get(i).toString());
+	}
+	System.out.print("\n");
+	System.out.print("\n");
+}
+
 }

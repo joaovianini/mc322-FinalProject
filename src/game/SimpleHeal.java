@@ -1,7 +1,20 @@
 package game;
 
-public class SimpleHeal implements Magic {
+public class SimpleHeal extends MapItem implements Magic {
 	protected String name;
+	
+	public SimpleHeal(int x, int y) {
+		super(x,y);
+		name ="Simple Heal";
+		creature = false;
+	}
+	
+	public SimpleHeal(int x, int y, int room) {
+		super(x,y);
+		name ="Simple Heal";
+		creature = false;
+		this.room = room;
+	}
 	
 	public SimpleHeal() {
 		name ="Simple Heal";
