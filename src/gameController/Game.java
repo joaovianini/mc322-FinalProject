@@ -164,7 +164,7 @@ public class Game {
 	
 	
 		public void movement() {
-			int redDiceResult1, redDiceResult2, result, step, remaining, multiplier;
+			int redDiceResult1, redDiceResult2, result, step, remaining, multiplier, backupX,backupY;
 			char direction;
 			String temp;
 			boolean endOfMovement = false;
@@ -198,19 +198,32 @@ public class Game {
 					System.out.println("Valor n�o suportado");
 			           scan.next();
 				}			
+				
+				backupX = hero.getPositionX();
+				backupY = hero.getPositionY();
+				
 				if(step > remaining) {
 					return;
 				}
 				switch(direction) {
 				case 'a':
 				if (hero.getPositionY()-step >= 0 && (map.isPositionEmpty(hero.getPositionX(), hero.getPositionY()-step)) && !map.isThereABlockX(hero.getPositionX(),hero.getPositionY(),hero.getPositionY()-step)){
-					map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
-					hero.setPosition(hero.getPositionX(), hero.getPositionY()-step);//muda posicao heroi
-					map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
-					map.printMap(); //imprime o mapa
-					hero.getBag().printBag();
-					movementHappened = true;
-					moveMonsters();
+					try{
+						if(hero.getPositionY()-step < 0) throw new ArrayIndexOutOfBoundsException();
+						map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
+						hero.setPosition(hero.getPositionX(), hero.getPositionY()-step);//muda posicao heroi
+						map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
+						map.printMap(); //imprime o mapa
+						hero.getBag().printBag();
+						movementHappened = true;
+						moveMonsters();
+					}
+					catch(ArrayIndexOutOfBoundsException e) {
+						System.out.println("Destino está fora do mapa.");
+						System.out.println("Tente novamente!");
+						map.map[backupX][backupY] = hero;
+						movementHappened = false;
+					}
 					
 				}else {
 					System.out.println("Posi��o invalida ou ocupada."); 
@@ -218,6 +231,8 @@ public class Game {
 				break;
 				case 'w':
 				if (hero.getPositionX()-step >= 0 && (map.isPositionEmpty(hero.getPositionX()-step, hero.getPositionY())) && !map.isThereABlockY(hero.getPositionY(),hero.getPositionX(),hero.getPositionX()-step)) {
+					try {
+					if(hero.getPositionX()-step < 0) throw new ArrayIndexOutOfBoundsException();
 					map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
 					hero.setPosition(hero.getPositionX()-step, hero.getPositionY());//muda posicao heroi
 					map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
@@ -225,12 +240,21 @@ public class Game {
 					hero.getBag().printBag();
 					movementHappened = true;
 					moveMonsters();
+					}
+					catch(ArrayIndexOutOfBoundsException e) {
+						System.out.println("Destino está fora do mapa.");
+						System.out.println("Tente novamente!");
+						map.map[backupX][backupY] = hero;
+						movementHappened = false;
+					}
 				}else {
 					System.out.println("Posi��o invalida ou ocupada."); 
 					movementHappened = false;}
 				break;
 				case 'd':
-				if (hero.getPositionY()+step <= map.getMapHeight() && (map.isPositionEmpty(hero.getPositionX(), hero.getPositionY()+step)) && !map.isThereABlockX(hero.getPositionX(), hero.getPositionY(), hero.getPositionY()+step) ){
+				if (hero.getPositionY()+step < map.getMapHeight() && (map.isPositionEmpty(hero.getPositionX(), hero.getPositionY()+step)) && !map.isThereABlockX(hero.getPositionX(), hero.getPositionY(), hero.getPositionY()+step) ){
+					try {
+					if(hero.getPositionY()+step >= map.getMapHeight()) throw new ArrayIndexOutOfBoundsException();
 					map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
 					hero.setPosition(hero.getPositionX(), hero.getPositionY()+step);//muda posicao heroi
 					map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
@@ -238,12 +262,21 @@ public class Game {
 					hero.getBag().printBag();
 					movementHappened = true;
 					moveMonsters();
+					}
+					catch(ArrayIndexOutOfBoundsException e) {
+						System.out.println("Destino está fora do mapa.");
+						System.out.println("Tente novamente!");
+						map.map[backupX][backupY] = hero;
+						movementHappened = false;
+					}
 				}else {
 					System.out.println("Posi��o invalida ou ocupada."); 
 					movementHappened = false;}
 				break;
 				case 's':
-				if ( hero.getPositionX()+step <= map.getMapWidth() && (map.isPositionEmpty(hero.getPositionX()+step, hero.getPositionY())) && !map.isThereABlockY(hero.getPositionY(), hero.getPositionX(), hero.getPositionX()+step)) {
+				if ( hero.getPositionX()+step < map.getMapWidth() && (map.isPositionEmpty(hero.getPositionX()+step, hero.getPositionY())) && !map.isThereABlockY(hero.getPositionY(), hero.getPositionX(), hero.getPositionX()+step)) {
+					try {
+					if(hero.getPositionX()+step >= map.getMapWidth()) throw new ArrayIndexOutOfBoundsException();
 					map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
 					hero.setPosition(hero.getPositionX()+step, hero.getPositionY());//muda posicao heroi
 					map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
@@ -251,6 +284,13 @@ public class Game {
 					hero.getBag().printBag();
 					movementHappened = true;
 					moveMonsters();
+					}
+					catch(ArrayIndexOutOfBoundsException e) {
+						System.out.println("Destino está fora do mapa.");
+						System.out.println("Tente novamente!");
+						map.map[backupX][backupY] = hero;
+						movementHappened = false;
+					}
 				}else {
 					System.out.println("Posi��o invalida ou ocupada."); 
 					movementHappened = false;}

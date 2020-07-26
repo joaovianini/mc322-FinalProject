@@ -317,14 +317,14 @@ public class Map {
 	}
 	
 	public void printMap() {
-		setVisibility();
+		//setVisibility();
 		for(int i=0; i<map.length; i++) {
 			for (int j=0; j<map[i].length; j++) {
-				if(map[i][j].isVisible())
-				System.out.print(map[i][j].toString());
-				else {
-					System.out.print("###");
-				}
+				//if(map[i][j].isVisible())
+				System.out.print(map[i][j]);
+				//else {
+				//	System.out.print("###");
+				//}
 			}
 			System.out.printf("\n");
 		}
