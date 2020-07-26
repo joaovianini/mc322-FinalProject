@@ -178,8 +178,8 @@ public class Game {
 			System.out.println("Dado 1: "+ redDiceResult1 + " Dado 2: " + redDiceResult2);
 			Boolean movementHappened = false;
 			while(endOfMovement == false) {
-				System.out.println("Voce pode andar até " + remaining + " casas.");
-				System.out.println("Escolha a direção do movimento utilizando as teclas 'a' 'w' 's' e 'd', ou aperte 'e' para");
+				System.out.println("Voce pode andar atï¿½ " + remaining + " casas.");
+				System.out.println("Escolha a direï¿½ï¿½o do movimento utilizando as teclas 'a' 'w' 's' e 'd', ou aperte 'e' para");
 				System.out.println("parar o movimento");
 				direction = scan.next().charAt(0);
 				if(direction == 'e') {
@@ -195,7 +195,7 @@ public class Game {
 					}
 				}
 				catch(InputMismatchException e) {
-					System.out.println("Valor não suportado");
+					System.out.println("Valor nï¿½o suportado");
 			           scan.next();
 				}			
 				if(step > remaining) {
@@ -213,7 +213,7 @@ public class Game {
 					moveMonsters();
 					
 				}else {
-					System.out.println("Posição invalida ou ocupada."); 
+					System.out.println("Posiï¿½ï¿½o invalida ou ocupada."); 
 					movementHappened = false;}
 				break;
 				case 'w':
@@ -226,7 +226,7 @@ public class Game {
 					movementHappened = true;
 					moveMonsters();
 				}else {
-					System.out.println("Posição invalida ou ocupada."); 
+					System.out.println("Posiï¿½ï¿½o invalida ou ocupada."); 
 					movementHappened = false;}
 				break;
 				case 'd':
@@ -239,7 +239,7 @@ public class Game {
 					movementHappened = true;
 					moveMonsters();
 				}else {
-					System.out.println("Posição invalida ou ocupada."); 
+					System.out.println("Posiï¿½ï¿½o invalida ou ocupada."); 
 					movementHappened = false;}
 				break;
 				case 's':
@@ -252,7 +252,7 @@ public class Game {
 					movementHappened = true;
 					moveMonsters();
 				}else {
-					System.out.println("Posição invalida ou ocupada."); 
+					System.out.println("Posiï¿½ï¿½o invalida ou ocupada."); 
 					movementHappened = false;}
 				break;
 				}
@@ -603,6 +603,7 @@ public class Game {
 				map.map[25][18] = hero;
 				break;
 			}
+			map.addHero(hero);
 		}
 		if(option == 2) {
 			buildMapFromFile();

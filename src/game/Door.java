@@ -10,6 +10,7 @@ public class Door extends MapItem {
 	}
 	
 	public Door(int x, int y, int room1, int room2){
+		setPosition(x,y);
 		creature = false;
 		accessible = true;
 		this.room1 = room1;

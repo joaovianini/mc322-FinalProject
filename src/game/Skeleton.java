@@ -3,8 +3,7 @@ package game;
 public class Skeleton extends Monster {
 
 	public Skeleton(int x, int y) {
-		this.x = x;
-		this.y = y;
+		setPosition(x,y);
 		this.healthPoints = 5;
 		this.intelligencePoints = 0;
 		this.numberAttackDices = 1;
@@ -18,8 +17,7 @@ public class Skeleton extends Monster {
 	}
 	
 	public Skeleton(int x, int y, int room) {
-		this.x = x;
-		this.y = y;
+		setPosition(x,y);
 		this.healthPoints = 5;
 		this.intelligencePoints = 0;
 		this.numberAttackDices = 1;

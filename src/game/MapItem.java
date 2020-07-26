@@ -7,12 +7,19 @@ public class MapItem {
 	protected boolean accessible;
 	protected boolean visible;
 	protected boolean creature;
-	
+	protected boolean existsOnMap;
+
 	public MapItem() {
-		x = 0;
-		y = 0;
+		this.x = x;
+		this.y = y;
 		accessible = true;
 		visible = true;
+		existsOnMap = false;
+	}
+	
+
+	public boolean ExistsOnMap() {
+		return existsOnMap;
 	}
 
 	public int getRoom() {
@@ -79,5 +86,6 @@ public class MapItem {
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
+		existsOnMap = true;
 	}
 }
