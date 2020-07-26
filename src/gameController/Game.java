@@ -16,7 +16,6 @@ public class Game {
 	private Map map;
 	private Die die;
 	private boolean exit;
-	private Scanner roll;
 	private Scanner scan;
 	private HeroType type; 
 	private Hero hero;
@@ -43,7 +42,6 @@ public class Game {
 }
 	private void moveGoblins() {
 		int direcao, x, y;
-		System.out.println("Numero de Goblins" + goblins.size());
 		for (int i = 0; i< goblins.size(); i++) {
 			x = goblins.get(i).getPositionX();
 			y = goblins.get(i).getPositionY();
@@ -85,7 +83,6 @@ public class Game {
 	
 	private void moveSkeletonWizards() {
 		int direcao, x, y;
-		System.out.println("Numero de Skeleton Wizards" + skeletonWizards.size());
 		for (int i = 0; i< skeletonWizards.size(); i++) {
 			x = skeletonWizards.get(i).getPositionX();
 			y = skeletonWizards.get(i).getPositionY();
@@ -128,7 +125,6 @@ public class Game {
 	
 	private void moveSkeletons() {
 		int direcao, x, y;
-		System.out.println("Numero de Skeletons" + skeletons.size());
 		for (int i = 0; i< skeletons.size(); i++) {
 			x = skeletons.get(i).getPositionX();
 			y = skeletons.get(i).getPositionY();
@@ -168,8 +164,9 @@ public class Game {
 	
 	
 	public void movement() {
-		int redDiceResult1, redDiceResult2, result, step, remaining;
+		int redDiceResult1, redDiceResult2, result, step, remaining, multiplier;
 		char direction;
+		String temp;
 		boolean endOfMovement = false;
 		System.out.println("Pressione qualquer tecla pra rolar os dados");
 		scan.nextLine();
@@ -180,16 +177,23 @@ public class Game {
 		remaining = result;
 		System.out.println("Dado 1: "+ redDiceResult1 + " Dado 2: " + redDiceResult2);
 		Boolean movementHappened = false;
-		Boolean cleanShot = true;
 		while(!endOfMovement) {
 			System.out.println("Voce pode andar até " + remaining + " casas.");
 			System.out.println("Escolha a direção do movimento utilizando as teclas 'a' 'w' 's' e 'd', ou aperte 'e' para");
 			System.out.println("parar o movimento");
 			direction = scan.next().charAt(0);
+			if(direction != 'e' && direction != 'q') {
 			System.out.print("Quantas casas deseja andar? ");
-			step = scan.nextInt();
+			try {
+				if(scan.hasNextInt()) {
+					step = scan.nextInt();
+				}
+			}
+			catch(InputMismatchException e) {
+				System.out.println("Valor não suportado");
+		           scan.next();
+			}			
 			if(step > remaining) {
-				System.out.println("Valor não permitido. Você fica nessa posição.");
 				return;
 			}
 			switch(direction) {
@@ -249,6 +253,9 @@ public class Game {
 			case 'e': 
 				endOfMovement = true;
 				break;
+			case 'q':
+				System.exit(1);
+				break;
 			}
 			if(movementHappened) remaining = remaining - step;
 			if(remaining <= 0) {
@@ -256,42 +263,40 @@ public class Game {
 			}
 	   }
 	}
+}
 	
 	public void readInput() {
-		int option;
+		int option = 1;
 		System.out.println("Escolha:");
-		System.out.println("1. Realizar a��o");
+		System.out.println("1. Realizar acao");
 		System.out.println("2. Mover");
 		System.out.println();
 		System.out.println("Digite o digito da opcao escolhida: ");
 		try {
-		option = scan.nextInt();
-			if(option!= 1 && option != 2) {
-				throw new IllegalArgumentException("Opção Inválida!");
-			}
+				if(scan.hasNextInt())
+					option = scan.nextInt();
+				else if(scan.hasNext()) {
+					String temp = scan.next();
+					System.out.printf("O valor %s inserido não é um inteiro.\nVocê deverá realizar uma ação.\n", temp);
+					
+				}
+				if(option!= 1 && option != 2) 
+					throw new IllegalArgumentException("Opção Inválida!");
 		}
 		catch(IllegalArgumentException e) {
 			System.out.println("Opção Inválida. Tente novamente!");
 			System.out.println("Escolha:");
-			System.out.println("1. Realizar a��o");
+			System.out.println("1. Realizar acao");
 			System.out.println("2. Mover");
 			System.out.println();
 			System.out.println("Digite o digito da opcao escolhida: ");
-			option = scan.nextInt();
-			if(option != 1 && option != 2) {
-				System.out.println("Você escolheu novamente uma opcao invalida!");
-				System.out.println("Você deverá realizar sua ação agora.");
-				option = 1; 
+			if(scan.hasNextInt())
+				option = scan.nextInt();
+			else if(scan.hasNext()) {
+				String temp = scan.next();
+				System.out.printf("O valor %s inserido não é um inteiro.\nVocê deverá realizar uma ação.\n", temp);
+				
 			}
-		}
-		catch(InputMismatchException e) {
-			System.out.println("Opção Inválida. Tente novamente!");
-			System.out.println("Escolha:");
-			System.out.println("1. Realizar a��o");
-			System.out.println("2. Mover");
-			System.out.println();
-			System.out.println("Digite o digito da opcao escolhida: ");
-			option = scan.nextInt();
 			if(option != 1 && option != 2) {
 				System.out.println("Você escolheu novamente uma opcao invalida!");
 				System.out.println("Você deverá realizar sua ação agora.");
@@ -308,7 +313,7 @@ public class Game {
 	}
 	
 	public void action() {
-		int option;
+		int option = 2;
 		System.out.println("O que você deseja fazer?");
 		System.out.println("1. Atacar um monstro");
 		System.out.println("2. Procurar um tesouro");
@@ -316,7 +321,13 @@ public class Game {
 			System.out.println("3. Lançar uma magia");
 		}
 		try {
-		option = scan.nextInt();
+			if(scan.hasNextInt())
+				option = scan.nextInt();
+			else if(scan.hasNext()) {
+				String temp = scan.next();
+				System.out.printf("O valor %s inserido não é um inteiro.\nVocê deverá procurar um tesouro.\n", temp);
+				
+			}
 			if(option == 3 && (type != HeroType.ELF && type != HeroType.WIZARD)) {
 				throw new IllegalArgumentException("Ação não Suportada");
 			}
@@ -333,7 +344,13 @@ public class Game {
 			if(type == HeroType.ELF || type == HeroType.WIZARD) {
 				System.out.println("3. Lançar uma magia");
 			}
-			option = scan.nextInt();
+			if(scan.hasNextInt())
+				option = scan.nextInt();
+			else if(scan.hasNext()) {
+				String temp = scan.next();
+				System.out.printf("O valor %s inserido não é um inteiro.\nVocê deverá procurar um tesouro.\n", temp);
+				
+			}
 			if(option == 3 && (type != HeroType.ELF && type != HeroType.WIZARD)) {
 				System.out.println("Você digitou uma opção inválida novamente.");
 				System.out.println("Você vai procurar por tesouros.");
@@ -345,33 +362,11 @@ public class Game {
 				option = 2;
 			}
 			
-		}
-		catch(InputMismatchException e){
-			System.out.println("Você digitou uma opção inválida.");
-			System.out.println("Tente novamente!");
-			System.out.println("O que você deseja fazer?");
-			System.out.println("1. Atacar um monstro");
-			System.out.println("2. Procurar um tesouro");
-			if(type == HeroType.ELF || type == HeroType.WIZARD) {
-				System.out.println("3. Lançar uma magia");
-			}
-			option = scan.nextInt();
-			if(option == 3 && (type != HeroType.ELF && type != HeroType.WIZARD)) {
-				System.out.println("Você digitou uma opção inválida novamente.");
-				System.out.println("Você vai procurar por tesouros.");
-				option = 2;
-			}
-			if (option != 1 && option != 2 && option != 3) {
-				System.out.println("Você digitou uma opção inválida novamente.");
-				System.out.println("Você vai procurar por tesouros.");
-				option = 2;
-			}
-			
-		}
+		}	
 	}
 	
 	public void start() {
-		int heroi, option;
+		int heroi = 4, option = 1;
 		System.out.println();
 		System.out.println("HeroQuest");
 		System.out.println();
@@ -379,7 +374,19 @@ public class Game {
 		System.out.println("Escolha um tipo de heroi:");
 		System.out.println("|1 - Barbaro|  |2 - Elfo|  |3 - Anao|  |4 - Mago|");
 		try{
-			heroi = scan.nextInt();
+			if(scan.hasNextInt())
+				heroi = scan.nextInt();
+			else if(scan.hasNext()) {
+				String temp = scan.next();
+				System.out.printf("O valor %s inserido não é uma opção válida.\nTente Novamente!.\n", temp);
+				if(scan.hasNextInt())
+					heroi = scan.nextInt();
+				else if(scan.hasNext()) {
+					temp = scan.next();
+					System.out.printf("O valor %s inserido não é uma opção válida.\n Você jogará como o mago.\n", temp);
+					heroi = 4;
+				}
+			}
 			
 			switch(heroi) {
 			case 1:
@@ -403,36 +410,11 @@ public class Game {
 			System.out.println("Tente novamente!");
 			System.out.println("Escolha um tipo de heroi:");
 			System.out.println("|1 - Barbaro|  |2 - Elfo|  |3 - Anao|  |4 - Mago|");
-			heroi = scan.nextInt();
-			
-			switch(heroi) {
-			case 1:
-				type = HeroType.BARBARIAN;
-				break;
-			case 2:
-				type = HeroType.ELF;
-				break;
-			case 3:
-				type = HeroType.DWARF;
-				break;
-			case 4:
-				type = HeroType.WIZARD;
-				break;
-			default:
-				System.out.println("Você escolheu novamente um tipo inválido.");
-				System.out.println("Você jogará como o mago.");
-				type = HeroType.WIZARD;
-				heroi = 4;
-			}
-		
-		}
-		catch(InputMismatchException e) {
-			System.out.println("Você escolheu um tipo inválido de heroi");
-			System.out.println("Tente novamente!");
-			System.out.println("Escolha um tipo de heroi:");
-			System.out.println("|1 - Barbaro|  |2 - Elfo|  |3 - Anao|  |4 - Mago|");
-			heroi = scan.nextInt();
-			
+			if(scan.hasNextInt())
+				heroi = scan.nextInt();
+			else {
+				heroi = 5;
+				}
 			switch(heroi) {
 			case 1:
 				type = HeroType.BARBARIAN;
@@ -464,10 +446,25 @@ public class Game {
 		System.out.println();
 		System.out.println("Digite o digito da opcao escolhida: ");
 		try {
-		option = scan.nextInt();
+		if(scan.hasNextInt()) {
+			option = scan.nextInt();
+			System.out.println("Você escolheu a opção "+ option);
+		}
+		else if(scan.hasNext()) {
+			String temp = scan.next();
+			System.out.printf("O valor %s inserido não é um inteiro. Tente Novamente!\n", temp);
+			if(scan.hasNextInt()) {
+				option = scan.nextInt();
+			}
+			else {
+				System.out.printf("O valor %s inserido não é um inteiro. Você jogará com o mapa aleatório.\n", temp);
+				option = 1; 
+			}
+		}
 		if(option!= 1 && option != 2) {
 			throw new IllegalArgumentException("Opção Inválida!");
 		}
+			
 		}
 		catch(IllegalArgumentException e) {
 			System.out.println("Opção Inválida. Tente novamente!");
@@ -476,26 +473,26 @@ public class Game {
 			System.out.println("2. Mapa carregado dos arquivos");
 			System.out.println();
 			System.out.println("Digite o digito da opcao escolhida: ");
-			option = scan.nextInt();
+			if(scan.hasNextInt())
+				option = scan.nextInt();
+			else if(scan.hasNext()) {
+				String temp = scan.next();
+				System.out.printf("O valor %s inserido não é um inteiro. Você jogará com o mapa aleatório.\n", temp);
+				option = 1;
+			}
 			if(option != 1 && option != 2) {
 				System.out.println("Você escolheu novamente uma opcao invalida!");
 				System.out.println("Você jogará com o mapa aleatório.");
 				option = 1; 
 			}
 		}
-		catch(InputMismatchException e) {
-			System.out.println("Opção Inválida. Tente novamente!");
-			System.out.println("Escolha uma forma de jogo: ");
-			System.out.println("1. Mapa aleatório");
-			System.out.println("2. Mapa carregado dos arquivos");
-			System.out.println();
-			System.out.println("Digite o digito da opcao escolhida: ");
-			option = scan.nextInt();
-			if(option != 1 && option != 2) {
-				System.out.println("Você escolheu novamente uma opcao invalida!");
-				System.out.println("Você jogará com o mapa aleatório.");
-				option = 1; 
-			}
+		System.out.println("Flag");
+			
+		if(option == 1) {
+			System.out.println("Você jogará com o mapa aleatório.");
+		}
+		if(option == 2) {
+			System.out.println("Você jogará com um mapa pré-definido carregado dos arquivos.");
 		}
 		
 		if(option == 1) {
@@ -522,29 +519,24 @@ public class Game {
 				map.map[25][18] = hero;
 				break;
 			}
-			
-			
-			while(!exit) {
-				map.printMap();
-				if (hero instanceof Wizard  ) {
-					((Wizard) hero).printMagics();
-				}else if (hero instanceof Elf){
-					((Elf) hero).printMagics();
-				}
-				readInput();
-			}
 		}
 		if(option == 2) {
 			buildMapFromFile();
 		}
 		
-		//teste
-		int a = die.rollRedDice();
-		DieFaces face =  die.rollCombatDice();
-		System.out.println("Dado numérico = " + a + " Dado vermelho = " + face);
-		
-		
+		while(!exit) {
+			map.printMap();
+			if (type == HeroType.WIZARD) {
+				((Wizard) hero).printMagics();
+			}else if (type == HeroType.ELF){
+				((Elf) hero).printMagics();
+			}
+			readInput();
+		}
 	}
+		
+	
+	
 	
 	private int buildMapFromFile() {
 		int goblinIndex = 0;
