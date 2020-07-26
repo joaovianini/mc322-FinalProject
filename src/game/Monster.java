@@ -12,13 +12,13 @@ public abstract class Monster extends MapItem implements Creature {
 	protected Bag bag;
 
 	@Override
-	public void attack(Creature creature) {
+	public void attack(MapItem creature) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void defend(Creature creature) {
+	public void defend(MapItem creature) {
 		// TODO Auto-generated method stub
 
 	}
@@ -29,9 +29,20 @@ public abstract class Monster extends MapItem implements Creature {
 
 	}
 	
-	public String toString() {
-		return "cuu";
-		
+	public void takeDamage(int damage) {
+		this.healthPoints -= damage;
+	}
+	
+	public int getHP() {
+		return this.healthPoints;
+	}
+	
+	public int getNumberAtkDices() {
+		return this.numberAttackDices;
+	}
+	
+	public int getNumberDefDices() {
+		return this.numberDefenseDices;
 	}
 
 }

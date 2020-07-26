@@ -1,7 +1,8 @@
 package game;
 
 public interface Creature {
-	public void attack(Creature creature);
-	public void defend(Creature creature);
+	public void attack(MapItem creature);
+	public void defend(MapItem creature);
+	public void takeDamage(int damage);
 	public void move(Direction direction);
 }

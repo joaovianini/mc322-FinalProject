@@ -16,7 +16,7 @@ public class Map {
 	public Map() {
 		map = new MapItem[28][37];
 		numberRooms = 34;
-		visibilityByRoom = new MapItem[34][74];
+		visibilityByRoom = new MapItem[34][120];
 		doors = new ArrayList<Door>();
 	}
 	
@@ -248,6 +248,48 @@ public class Map {
 		
 	}
 	
+	public MapItem foundSkeletonNearby(Hero hero) {
+		int x = hero.getPositionX();
+		int y = hero.getPositionY();
+		if (x-1 >= 0 && map[x-1][y].toString() == " S "){return map[x-1][y];}
+		else if(x-1 >= 0 && y+1 < getMapHeight() && map[x-1][y+1].toString() == " S ") {return map[x-1][y+1];}
+		else if(y+1 < getMapHeight() && map[x][y+1].toString() == " S ") {return map[x][y+1];} 
+		else if(x+1 < getMapWidth() && y+1 < getMapHeight() && map[x+1][y+1].toString() == " S ") {return map[x+1][y+1];} 
+		else if(x+1 < getMapWidth() && map[x+1][y].toString() == " S ") {return map[x+1][y];} 
+		else if(x+1 < getMapWidth() && y-1 >= 0 && map[x+1][y-1].toString() == " S ") {return map[x+1][y-1];} 
+		else if(y-1 >= 0 && map[x][y-1].toString() == " S ") {return map[x][y-1];}
+		else if(x-1 >= 0 && y-1 >= 0 && map[x-1][y-1].toString() == " S ") {return map[x-1][y-1];}
+		else {return null;}
+	}
+	
+	public MapItem foundSkeletonWizardNearby(Hero hero) {
+		int x = hero.getPositionX();
+		int y = hero.getPositionY();
+		if (x-1 >= 0 && map[x-1][y].toString() == " R "){return map[x-1][y];}
+		else if(x-1 >= 0 && y+1 < getMapHeight() && map[x-1][y+1].toString() == " R ") {return map[x-1][y+1];}
+		else if(y+1 < getMapHeight() && map[x][y+1].toString() == " R ") {return map[x][y+1];} 
+		else if(x+1 < getMapWidth() && y+1 < getMapHeight() && map[x+1][y+1].toString() == " R ") {return map[x+1][y+1];} 
+		else if(x+1 < getMapWidth() && map[x+1][y].toString() == " R ") {return map[x+1][y];} 
+		else if(x+1 < getMapWidth() && y-1 >= 0 && map[x+1][y-1].toString() == " R ") {return map[x+1][y-1];} 
+		else if(y-1 >= 0 && map[x][y-1].toString() == " R ") {return map[x][y-1];}
+		else if(x-1 >= 0 && y-1 >= 0 && map[x-1][y-1].toString() == " R ") {return map[x-1][y-1];}
+		else {return null;}
+	}
+	
+	
+	public MapItem foundGoblinNearby(Hero hero) {
+		int x = hero.getPositionX();
+		int y = hero.getPositionY();
+		if (x-1 >= 0 && map[x-1][y].toString() == " G "){return map[x-1][y];}
+		else if(x-1 >= 0 && y+1 < getMapHeight() && map[x-1][y+1].toString() == " G ") {return map[x-1][y+1];}
+		else if(y+1 < getMapHeight() && map[x][y+1].toString() == " G ") {return map[x][y+1];} 
+		else if(x+1 < getMapWidth() && y+1 < getMapHeight() && map[x+1][y+1].toString() == " G ") {return map[x+1][y+1];} 
+		else if(x+1 < getMapWidth() && map[x+1][y].toString() == " G ") {return map[x+1][y];} 
+		else if(x+1 < getMapWidth() && y-1 >= 0 && map[x+1][y-1].toString() == " G ") {return map[x+1][y-1];} 
+		else if(y-1 >= 0 && map[x][y-1].toString() == " G ") {return map[x][y-1];}
+		else if(x-1 >= 0 && y-1 >= 0 && map[x-1][y-1].toString() == " G ") {return map[x-1][y-1];}
+		else {return null;}
+	}
 	
 	public MapItem getItem(int x, int y) {
 		return map[x][y];
@@ -273,5 +315,10 @@ public class Map {
 	public boolean isPositionEmpty(int x, int y) {
 		if (map[x][y] instanceof EmptySpace) return true;
 		else return false;
+	}
+	
+	public void removeFromMap(int x, int y) {
+		EmptySpace vazio = new EmptySpace(x,y);
+		map[x][y] = vazio;
 	}
 }

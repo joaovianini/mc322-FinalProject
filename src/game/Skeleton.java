@@ -41,5 +41,11 @@ public class Skeleton extends Monster {
 	public void move(Direction direction) {
 		
 	}
+
+	@Override
+	public void takeDamage(int damage) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

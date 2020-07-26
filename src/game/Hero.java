@@ -13,13 +13,21 @@ public abstract class Hero extends MapItem implements Creature {
 	protected boolean controlled;
 	
 	@Override
-	public void attack(Creature creature) {
-		// TODO Auto-generated method stub
+	public void attack(MapItem creature) {
 
 	}
-
+	
+	public void attack(Monster monster, int damage) {
+		if (damage >= 0) {
+			monster.takeDamage(damage);
+		} else {
+			this.takeDamage(damage);
+		}
+		
+	}
+	
 	@Override
-	public void defend(Creature creature) {
+	public void defend(MapItem creature) {
 		// TODO Auto-generated method stub
 
 	}
@@ -30,9 +38,24 @@ public abstract class Hero extends MapItem implements Creature {
 
 	}
 	
+	public void takeDamage(int damage) {
+		this.healthPoints += damage;
+	}
 
 	public Bag getBag() {
 		return this.bag;
+	}
+	
+	public int getNumberAtkDices() {
+		return this.numberAttackDices;
+	}
+	
+	public int getNumberDefDices() {
+		return this.numberDefenseDices;
+	}
+	
+	public int getHP() {
+		return this.healthPoints;
 	}
 
 }

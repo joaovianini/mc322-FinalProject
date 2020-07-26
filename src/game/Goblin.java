@@ -40,5 +40,24 @@ public class Goblin extends Monster {
 		this.room = room;
 	}
 
+	@Override
+	public void attack(MapItem creature) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void defend(MapItem creature) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void move(Direction direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

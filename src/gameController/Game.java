@@ -10,9 +10,9 @@ import game.*;
 public class Game {
 	
 	private static SecureRandom random = new SecureRandom();
-	private ArrayList<Skeleton> skeletons;
-	private ArrayList<SkeletonWizard> skeletonWizards;
-	private ArrayList<Goblin> goblins;
+	private ArrayList<Monster> skeletons;
+	private ArrayList<Monster> skeletonWizards;
+	private ArrayList<Monster> goblins;
 	private Map map;
 	private Die die;
 	private boolean exit;
@@ -24,9 +24,9 @@ public class Game {
 	
 	
 	public Game() {
-		skeletons = new ArrayList<Skeleton>();
-		skeletonWizards = new ArrayList<SkeletonWizard>();
-		goblins = new ArrayList<Goblin>();
+		skeletons = new ArrayList<Monster>();
+		skeletonWizards = new ArrayList<Monster>();
+		goblins = new ArrayList<Monster>();
 		map = null;
 		die = new Die();
 		exit = false;
@@ -163,107 +163,105 @@ public class Game {
 	}
 	
 	
-	public void movement() {
-		int redDiceResult1, redDiceResult2, result, step, remaining, multiplier;
-		char direction;
-		String temp;
-		boolean endOfMovement = false;
-		System.out.println("Pressione qualquer tecla pra rolar os dados");
-		scan.nextLine();
-		redDiceResult1 = die.rollRedDice();
-		redDiceResult2 = die.rollRedDice();
-		result = redDiceResult1 + redDiceResult2;
-		step = 0;
-		remaining = result;
-		System.out.println("Dado 1: "+ redDiceResult1 + " Dado 2: " + redDiceResult2);
-		Boolean movementHappened = false;
-		while(!endOfMovement) {
-			System.out.println("Voce pode andar atÃ© " + remaining + " casas.");
-			System.out.println("Escolha a direÃ§Ã£o do movimento utilizando as teclas 'a' 'w' 's' e 'd', ou aperte 'e' para");
-			System.out.println("parar o movimento");
-			direction = scan.next().charAt(0);
-			if(direction != 'e' && direction != 'q') {
-			System.out.print("Quantas casas deseja andar? ");
-			try {
-				if(scan.hasNextInt()) {
-					step = scan.nextInt();
+		public void movement() {
+			int redDiceResult1, redDiceResult2, result, step, remaining, multiplier;
+			char direction;
+			String temp;
+			boolean endOfMovement = false;
+			System.out.println("Pressione qualquer tecla pra rolar os dados");
+			scan.nextLine();
+			redDiceResult1 = die.rollRedDice();
+			redDiceResult2 = die.rollRedDice();
+			result = redDiceResult1 + redDiceResult2;
+			step = 0;
+			remaining = result;
+			System.out.println("Dado 1: "+ redDiceResult1 + " Dado 2: " + redDiceResult2);
+			Boolean movementHappened = false;
+			while(endOfMovement == false) {
+				System.out.println("Voce pode andar até " + remaining + " casas.");
+				System.out.println("Escolha a direção do movimento utilizando as teclas 'a' 'w' 's' e 'd', ou aperte 'e' para");
+				System.out.println("parar o movimento");
+				direction = scan.next().charAt(0);
+				if(direction == 'e') {
+					return;
 				}
-			}
-			catch(InputMismatchException e) {
-				System.out.println("Valor nÃ£o suportado");
-		           scan.next();
-			}			
-			if(step > remaining) {
-				return;
-			}
-			switch(direction) {
-			case 'a':
-			if (hero.getPositionY()-step >= 0 && (map.isPositionEmpty(hero.getPositionX(), hero.getPositionY()-step)) && !map.isThereABlockX(hero.getPositionX(),hero.getPositionY(),hero.getPositionY()-step)){
-				map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
-				hero.setPosition(hero.getPositionX(), hero.getPositionY()-step);//muda posicao heroi
-				map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
-				map.printMap(); //imprime o mapa
-				hero.getBag().printBag();
-				movementHappened = true;
-				moveMonsters();
-				
-			}else {
-				System.out.println("PosiÃ§Ã£o invalida ou ocupada."); 
-				movementHappened = false;}
-			break;
-			case 'w':
-			if (hero.getPositionX()-step >= 0 && (map.isPositionEmpty(hero.getPositionX()-step, hero.getPositionY())) && !map.isThereABlockY(hero.getPositionY(),hero.getPositionX(),hero.getPositionX()-step)) {
-				map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
-				hero.setPosition(hero.getPositionX()-step, hero.getPositionY());//muda posicao heroi
-				map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
-				map.printMap();//
-				hero.getBag().printBag();
-				movementHappened = true;
-				moveMonsters();
-			}else {
-				System.out.println("PosiÃ§Ã£o invalida ou ocupada."); 
-				movementHappened = false;}
-			break;
-			case 'd':
-			if (hero.getPositionY()+step <= map.getMapHeight() && (map.isPositionEmpty(hero.getPositionX(), hero.getPositionY()+step)) && !map.isThereABlockX(hero.getPositionX(), hero.getPositionY(), hero.getPositionY()+step) ){
-				map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
-				hero.setPosition(hero.getPositionX(), hero.getPositionY()+step);//muda posicao heroi
-				map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
-				map.printMap();//
-				hero.getBag().printBag();
-				movementHappened = true;
-				moveMonsters();
-			}else {
-				System.out.println("PosiÃ§Ã£o invalida ou ocupada."); 
-				movementHappened = false;}
-			break;
-			case 's':
-			if ( hero.getPositionX()+step <= map.getMapWidth() && (map.isPositionEmpty(hero.getPositionX()+step, hero.getPositionY())) && !map.isThereABlockY(hero.getPositionY(), hero.getPositionX(), hero.getPositionX()+step)) {
-				map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
-				hero.setPosition(hero.getPositionX()+step, hero.getPositionY());//muda posicao heroi
-				map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
-				map.printMap();//
-				hero.getBag().printBag();
-				movementHappened = true;
-				moveMonsters();
-			}else {
-				System.out.println("PosiÃ§Ã£o invalida ou ocupada."); 
-				movementHappened = false;}
-			break;
-			case 'e': 
-				endOfMovement = true;
+				if (direction == 'q') {
+					System.exit(1);
+				}
+				System.out.print("Quantas casas deseja andar? ");
+				try {
+					if(scan.hasNextInt()) {
+						step = scan.nextInt();
+					}
+				}
+				catch(InputMismatchException e) {
+					System.out.println("Valor não suportado");
+			           scan.next();
+				}			
+				if(step > remaining) {
+					return;
+				}
+				switch(direction) {
+				case 'a':
+				if (hero.getPositionY()-step >= 0 && (map.isPositionEmpty(hero.getPositionX(), hero.getPositionY()-step)) && !map.isThereABlockX(hero.getPositionX(),hero.getPositionY(),hero.getPositionY()-step)){
+					map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
+					hero.setPosition(hero.getPositionX(), hero.getPositionY()-step);//muda posicao heroi
+					map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
+					map.printMap(); //imprime o mapa
+					hero.getBag().printBag();
+					movementHappened = true;
+					moveMonsters();
+					
+				}else {
+					System.out.println("Posição invalida ou ocupada."); 
+					movementHappened = false;}
 				break;
-			case 'q':
-				System.exit(1);
+				case 'w':
+				if (hero.getPositionX()-step >= 0 && (map.isPositionEmpty(hero.getPositionX()-step, hero.getPositionY())) && !map.isThereABlockY(hero.getPositionY(),hero.getPositionX(),hero.getPositionX()-step)) {
+					map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
+					hero.setPosition(hero.getPositionX()-step, hero.getPositionY());//muda posicao heroi
+					map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
+					map.printMap();//
+					hero.getBag().printBag();
+					movementHappened = true;
+					moveMonsters();
+				}else {
+					System.out.println("Posição invalida ou ocupada."); 
+					movementHappened = false;}
 				break;
-			}
-			if(movementHappened) remaining = remaining - step;
-			if(remaining <= 0) {
-				endOfMovement = true;
-			}
-	   }
-	}
-}
+				case 'd':
+				if (hero.getPositionY()+step <= map.getMapHeight() && (map.isPositionEmpty(hero.getPositionX(), hero.getPositionY()+step)) && !map.isThereABlockX(hero.getPositionX(), hero.getPositionY(), hero.getPositionY()+step) ){
+					map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
+					hero.setPosition(hero.getPositionX(), hero.getPositionY()+step);//muda posicao heroi
+					map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
+					map.printMap();//
+					hero.getBag().printBag();
+					movementHappened = true;
+					moveMonsters();
+				}else {
+					System.out.println("Posição invalida ou ocupada."); 
+					movementHappened = false;}
+				break;
+				case 's':
+				if ( hero.getPositionX()+step <= map.getMapWidth() && (map.isPositionEmpty(hero.getPositionX()+step, hero.getPositionY())) && !map.isThereABlockY(hero.getPositionY(), hero.getPositionX(), hero.getPositionX()+step)) {
+					map.map[hero.getPositionX()][hero.getPositionY()] = emptySpace;//apaga posicao antiga
+					hero.setPosition(hero.getPositionX()+step, hero.getPositionY());//muda posicao heroi
+					map.map[hero.getPositionX()][hero.getPositionY()] = hero;//muda posicao heroi no mapa
+					map.printMap();//
+					hero.getBag().printBag();
+					movementHappened = true;
+					moveMonsters();
+				}else {
+					System.out.println("Posição invalida ou ocupada."); 
+					movementHappened = false;}
+				break;
+				}
+				if(movementHappened) remaining = remaining - step;
+				if(remaining <= 0) {
+					endOfMovement = true;
+				}
+		   }
+		}
 	
 	public void readInput() {
 		int option = 1;
@@ -362,8 +360,94 @@ public class Game {
 				option = 2;
 			}
 			
-		}	
+		}
+		
+		
+		//atacar
+		//primeiro procura por skeleton, depois skeleton wizard e depois goblin
+		if (option == 1) {
+			
+			int damage;
+			MapItem target = new MapItem();
+			target = map.foundSkeletonNearby(hero);
+			if (target!= null) {
+				for (int i = 0; i < skeletons.size(); i++) {
+					if(target == skeletons.get(i)) {
+						damage = combat(hero,skeletons.get(i));
+						hero.attack(skeletons.get(i), damage);
+						System.out.printf("ATACOU! VIDA RESTANTE DO MONSTRO: %d\n", skeletons.get(i).getHP());
+						System.out.printf("SUA VIDA: %d", hero.getHP());
+						if(skeletons.get(i).getHP() <= 0) {
+							map.removeFromMap(skeletons.get(i).getPositionX(), skeletons.get(i).getPositionY());
+							skeletons.remove(i);
+						}
+					}
+				}
+			}
+			else {
+				target = map.foundSkeletonWizardNearby(hero);
+				if (target != null) {
+					for (int i = 0; i < skeletonWizards.size(); i++) {
+						if(target == skeletonWizards.get(i)) {
+							damage = combat(hero,skeletonWizards.get(i));
+							hero.attack(skeletonWizards.get(i), damage);
+							System.out.printf("ATACOU! VIDA RESTANTE DO MONSTRO: %d\n", skeletonWizards.get(i).getHP());
+							System.out.printf("SUA VIDA: %d", hero.getHP());
+							if(skeletonWizards.get(i).getHP() <= 0) {
+								map.removeFromMap(skeletonWizards.get(i).getPositionX(), skeletonWizards.get(i).getPositionY());
+								skeletonWizards.remove(i);
+							}
+						}
+					}
+				}
+				else {
+					target = map.foundGoblinNearby(hero);
+					if(target != null) {
+						for (int i = 0; i < goblins.size(); i++) {
+							if(target == goblins.get(i)) {
+								damage = combat(hero,goblins.get(i));
+								hero.attack(goblins.get(i), damage);
+								System.out.printf("ATACOU! VIDA RESTANTE DO MONSTRO: %d\n", goblins.get(i).getHP());
+								System.out.printf("SUA VIDA: %d", hero.getHP());
+								if(goblins.get(i).getHP() <= 0) {
+									map.removeFromMap(goblins.get(i).getPositionX(), goblins.get(i).getPositionY());
+									goblins.remove(i);
+								}
+							}
+						}
+					}
+					else {
+						System.out.println("Nenhum monstro por perto.");
+					}
+				}
+			}
+		}
 	}
+	
+	public int combat(Hero h, Monster m) {
+		DieFaces dadoAtk;
+		DieFaces dadoDef;
+		int atk = 0;
+		int def = 0;
+		int damage = 0;
+		for (int i = 0; i<= h.getNumberAtkDices(); i++) {
+			dadoAtk = die.rollCombatDice();
+			if (dadoAtk== DieFaces.SKULL) {
+				atk++;
+			}
+		}	
+		for (int y = 0; y<= m.getNumberDefDices(); y++) {
+			dadoDef = die.rollCombatDice();
+			if (dadoDef== DieFaces.MONSTERSHIELD) {
+				def++;
+			}
+		}
+		damage = atk - def;
+		System.out.println("LANCANDO DADOS:");
+		System.out.printf("ATAQUE HEROI: %d caveiras || DEFESA MONSTRO: %d escudos || DANO TOTAL: %d\n", atk, def, damage);
+		return damage;
+	}
+	
 	
 	public void start() {
 		int heroi = 4, option = 1;
