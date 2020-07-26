@@ -30,4 +30,8 @@ public class BronzeArmor extends Armor {
 		creature = false;
 		this.room = room;
 	}
+	
+	public String toString() {
+		return "BronzeArmor";
+	}
 }

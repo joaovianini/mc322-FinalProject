@@ -32,4 +32,8 @@ public class SilverArmor extends Armor {
 		creature = false;
 		this.room = room;
 	}
+	
+	public String toString() {
+		return "SilverArmor";
+	}
 }

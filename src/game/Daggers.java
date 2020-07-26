@@ -47,5 +47,7 @@ public class Daggers extends Weapon {
 		monster.bag.addItem(this);
 	}
 	
-
+	public String toString() {
+		return "Dagger";
+	}
 }

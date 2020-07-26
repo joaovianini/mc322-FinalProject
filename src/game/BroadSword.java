@@ -53,5 +53,9 @@ public final class BroadSword extends Weapon {
 	public void getCollected(Monster monster) {	
 		monster.bag.addItem(this);
 	}
+	
+	public String toString() {
+		return "BroadSword";
+	}
 
 }

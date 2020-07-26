@@ -526,8 +526,12 @@ public class Game {
 			
 			while(!exit) {
 				map.printMap();
+				if (hero instanceof Wizard  ) {
+					((Wizard) hero).printMagics();
+				}else if (hero instanceof Elf){
+					((Elf) hero).printMagics();
+				}
 				readInput();
-				//map.printMap();
 			}
 		}
 		if(option == 2) {

@@ -34,5 +34,9 @@ public class Potion extends Item {
 	public void use(Hero h) {
 		h.healthPoints += 2;
 	}
+	
+	public String toString() {
+		return "Potion";
+	}
 
 }

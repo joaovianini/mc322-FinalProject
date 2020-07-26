@@ -50,5 +50,9 @@ public class Teleport extends MapItem implements Magic {
 		System.out.print("Escolha quantas casas pular: \n");
 		//o caster teleporta para alguma casa que esteja no seu campo de vis�o.
 	}
+	
+	public String toString() {
+		return "Teleport";
+	}
 
 }

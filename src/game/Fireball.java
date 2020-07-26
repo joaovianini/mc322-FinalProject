@@ -68,5 +68,9 @@ public class Fireball extends MapItem implements Magic {
 		
 	}
 	
+	public String toString() {
+		return "Fireball";
+	}
+	
 }
 

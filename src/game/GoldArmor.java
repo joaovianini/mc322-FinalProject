@@ -31,4 +31,8 @@ public class GoldArmor extends Armor {
 		creature = false;
 		this.room = room;
 	}
+	
+	public String toString() {
+		return "GoldArmor";
+	}
 }

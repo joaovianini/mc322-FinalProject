@@ -63,6 +63,10 @@ public class MagicMissile extends MapItem implements Magic {
 	public void cast(Monster monster) {
 		
 	}
+	
+	public String toString() {
+		return "MagicMissile";
+	}
 
 }
 

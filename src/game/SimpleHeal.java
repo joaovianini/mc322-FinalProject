@@ -51,6 +51,10 @@ public class SimpleHeal extends MapItem implements Magic {
 				caster.healthPoints += 6;
 			}
 		}
+	
+	public String toString() {
+		return "Heal";
+	}
 	}
 
 
