@@ -6,12 +6,16 @@ public class Potion extends Item {
 	public Potion() {
 		this.name = "Potion";
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public Potion(int x, int y) {
 		setPosition(x,y);
 		this.name = "Potion";
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public Potion(int x, int y, int room) {
@@ -19,6 +23,8 @@ public class Potion extends Item {
 		this.name = "Potion";
 		creature = false;
 		this.room = room;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 
 
@@ -35,8 +41,15 @@ public class Potion extends Item {
 		h.healthPoints += 2;
 	}
 	
-	public String toString() {
+	public String toBag() {
 		return "Potion";
+	}
+	
+	public String toString() {
+		if(isHidden()) {
+			return "   ";
+		}
+		else return " P ";
 	}
 
 }

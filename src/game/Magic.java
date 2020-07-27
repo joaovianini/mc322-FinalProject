@@ -5,5 +5,5 @@ public interface Magic{
 	public void cast(Monster caster, Hero target);
 	public void cast(Monster monster);
 	public void cast(Hero hero);
-
+	public String toBag();
 }

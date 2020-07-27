@@ -873,9 +873,17 @@ public class Map {
 		}
 	}
 	
+	public boolean isAMagic(int x, int y) {
+		return map[x][y].getGenType() == GeneralType.MAGIC;
+	}
+	
+	public boolean isAnItem(int x, int y) {
+		return map[x][y].getGenType() == GeneralType.ITEM;
+	}
+	
 	public boolean isPositionEmpty(int x, int y) {
-		if (map[x][y] instanceof EmptySpace) return true;
-		else return false;
+		return map[x][y].getGenType() == GeneralType.EMPTY;
+		
 	}
 	
 	public void removeFromMap(int x, int y) {

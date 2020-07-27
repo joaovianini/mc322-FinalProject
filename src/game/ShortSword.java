@@ -9,6 +9,7 @@ public final class ShortSword extends Weapon {
 		usesTwoHands = false;
 		extraAtackDices = 2;
 		creature = false;
+		setHidden(false);
 	}
 
 	public ShortSword(Monster monster) {
@@ -17,6 +18,7 @@ public final class ShortSword extends Weapon {
 		usesTwoHands = false;
 		extraAtackDices = 2;
 		creature = false;
+		setHidden(false);
 	}
 	
 	public ShortSword(int x, int y) {
@@ -26,6 +28,8 @@ public final class ShortSword extends Weapon {
 		usesTwoHands = false;
 		extraAtackDices = 2;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(false);
 	}
 	
 	public ShortSword(int x, int y, int room) {
@@ -36,6 +40,8 @@ public final class ShortSword extends Weapon {
 		extraAtackDices = 2;
 		creature = false;
 		this.room = room;
+		setGenType(GeneralType.ITEM);
+		setHidden(false);
 	}
 	
 	public ShortSword() {
@@ -44,6 +50,8 @@ public final class ShortSword extends Weapon {
 		usesTwoHands = false;
 		extraAtackDices = 2;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(false);
 	}
 	
 	
@@ -55,7 +63,14 @@ public final class ShortSword extends Weapon {
 			monster.bag.addItem(this);
 	}
 	
-	public String toString() {
+	public String toBag() {
 		return "ShortSword";
+	}
+	
+	public String toString() {
+		if(isHidden()) {
+			return "   ";
+		}
+		else return " N ";
 	}
 }

@@ -7,21 +7,34 @@ public class Fireball extends MapItem implements Magic {
 //enquanto nao temos mapa deixei apenas o dano no target
 
 	Die die;
+	private boolean hidden;
+	public boolean isHidden() {
+		return hidden;
+	}
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
 
 	public Fireball() {
 		die = new Die();
 		setCreature(false);
+		setGenType(GeneralType.MAGIC);
+		setHidden(true);
 	}
 	
 	public Fireball(int x, int y) {
 		super(x,y);
 		setCreature(false);
+		setGenType(GeneralType.MAGIC);
+		setHidden(true);
 	}
 	
 	public Fireball(int x, int y, int room) {
 		super(x,y);
 		setCreature(false);
 		this.room = room;
+		setGenType(GeneralType.MAGIC);
+		setHidden(true);
 	}
 	
 	public void getCollected(Wizard wiz) {
@@ -68,8 +81,15 @@ public class Fireball extends MapItem implements Magic {
 		
 	}
 	
-	public String toString() {
+	public String toBag() {
 		return "Fireball";
+	}
+	
+	public String toString() {
+		if(isHidden()) {
+			return "   ";
+		}
+		else return " F ";
 	}
 	
 }

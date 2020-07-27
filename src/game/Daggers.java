@@ -9,6 +9,8 @@ public class Daggers extends Weapon {
 		disappearAfterUse = true;
 		usesTwoHands = false;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public Daggers(int x, int y) {
@@ -18,6 +20,8 @@ public class Daggers extends Weapon {
 		disappearAfterUse = true;
 		usesTwoHands = false;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public Daggers(int x, int y, int room) {
@@ -28,6 +32,8 @@ public class Daggers extends Weapon {
 		usesTwoHands = false;
 		creature = false;
 		this.room = room;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public Daggers() {
@@ -36,6 +42,8 @@ public class Daggers extends Weapon {
 		disappearAfterUse = true;
 		usesTwoHands = false;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	@Override
 	public void getCollected(Hero hero) {
@@ -47,7 +55,15 @@ public class Daggers extends Weapon {
 		monster.bag.addItem(this);
 	}
 	
-	public String toString() {
+	public String toBag() {
 		return "Dagger";
+	}
+	
+	public String toString() {
+		if(isHidden()) {
+			return "   ";
+		}
+		else
+		return " A ";
 	}
 }

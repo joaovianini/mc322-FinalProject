@@ -13,6 +13,7 @@ public class Barbarian extends Hero {
 		leftHandWeapon = null; 
 		bag = new Bag();
 		creature = true;
+		setGenType(GeneralType.HERO);
 	}
 	
 	public Barbarian(int x, int y, String name, int room) {

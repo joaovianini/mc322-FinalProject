@@ -7,6 +7,8 @@ public class BronzeArmor extends Armor {
 		extraDefenseDices = 1;
 		disappearAfterUse = false;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public BronzeArmor() {
@@ -14,6 +16,8 @@ public class BronzeArmor extends Armor {
 		extraDefenseDices = 1;
 		disappearAfterUse = false;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 
 	public BronzeArmor(int x, int y) {
@@ -21,6 +25,8 @@ public class BronzeArmor extends Armor {
 		extraDefenseDices = 1;
 		disappearAfterUse = false;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public BronzeArmor(int x, int y, int room) {
@@ -29,9 +35,19 @@ public class BronzeArmor extends Armor {
 		disappearAfterUse = false;
 		creature = false;
 		this.room = room;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
+	}
+	
+	public String toBag() {
+		return "BronzeArmor";
 	}
 	
 	public String toString() {
-		return "BronzeArmor";
+		if(isHidden()) {
+			return "   ";
+		}
+		return " H ";
+		}
 	}
-}
+

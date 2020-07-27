@@ -8,6 +8,8 @@ public final class BroadSword extends Weapon {
 		disappearAfterUse = false;
 		usesTwoHands = true;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public BroadSword(Monster monster) {
@@ -16,6 +18,8 @@ public final class BroadSword extends Weapon {
 		disappearAfterUse = false;
 		usesTwoHands = true;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public BroadSword(int x, int y) {
@@ -25,6 +29,8 @@ public final class BroadSword extends Weapon {
 		disappearAfterUse = false;
 		usesTwoHands = true;
 		creature = false;
+		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public BroadSword(int x, int y, int room) {
@@ -35,6 +41,7 @@ public final class BroadSword extends Weapon {
 		usesTwoHands = true;
 		creature = false;
 		this.room = room;
+		setGenType(GeneralType.ITEM);
 	}
 	
 	public BroadSword() {
@@ -43,6 +50,7 @@ public final class BroadSword extends Weapon {
 		disappearAfterUse = false;
 		usesTwoHands = true;
 		creature = false;
+		setGenType(GeneralType.ITEM);
 	}
 	
 	@Override
@@ -54,8 +62,15 @@ public final class BroadSword extends Weapon {
 		monster.bag.addItem(this);
 	}
 	
-	public String toString() {
+	public String toBag() {
 		return "BroadSword";
+	}
+	
+	public String toString() {
+		if(isHidden()) {
+			return "   ";
+		}
+		else return " L ";
 	}
 
 }

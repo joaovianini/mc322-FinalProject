@@ -47,7 +47,7 @@ public class Wizard extends Hero {
 	public void printMagics() {
 		System.out.printf("| MAGICS | %d total |:", magics.size());
 		for (int i = 0; i<magics.size();i++) {
-			System.out.printf(" (%d - %s) ", i, magics.get(i).toString());
+			System.out.printf(" (%d - %s) ", i, magics.get(i).toBag());
 		}
 		System.out.print("\n");
 	}

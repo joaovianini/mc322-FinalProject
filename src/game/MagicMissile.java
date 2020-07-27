@@ -2,24 +2,37 @@ package game;
 
 public class MagicMissile extends MapItem implements Magic {
 	protected String name;
+	private boolean hidden;
+	
+	public boolean isHidden() {
+		return hidden;
+	}
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
 
 	public MagicMissile() {
 		name = "Magic Missile";
 		creature = false;
+		setGenType(GeneralType.MAGIC);
+		setHidden(true);
 	}
 	
 	public MagicMissile(int x, int y) {
 		setPosition(x,y);
 		name = "Magic Missile";
 		creature = false;
+		setGenType(GeneralType.MAGIC);
+		setHidden(true);
 	}
 	
 	public MagicMissile(int x, int y, int room) {
 		setPosition(x,y);
 		name = "Magic Missile";
 		creature = false;
-		room = room;
-		
+		this.room = room;
+		setGenType(GeneralType.MAGIC);
+		setHidden(true);
 	}
 	
 	public void getCollected(Wizard wiz) {
@@ -65,7 +78,14 @@ public class MagicMissile extends MapItem implements Magic {
 	}
 	
 	public String toString() {
-		return "MagicMissile";
+		return " M ";
+	}
+	
+	public String toBag() {
+		if(isHidden()) {
+			return "   ";
+		}
+		else return "MagicMissile";
 	}
 
 }

@@ -3,15 +3,27 @@ package game;
 public class Teleport extends MapItem implements Magic {
 	protected String name;
 	
+	private boolean hidden;
+	public boolean isHidden() {
+		return hidden;
+	}
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
+	
 	public Teleport() {
 		name = "Teleport";
 		setCreature(false);
+		setGenType(GeneralType.MAGIC);
+		setHidden(true);
 	}
 	
 	public Teleport(int x, int y) {
 		name = "Teleport";
 		setCreature(false);
 		setPosition(x,y);
+		setGenType(GeneralType.MAGIC);
+		setHidden(true);
 	}
 	
 	public Teleport(int x, int y, int room) {
@@ -19,6 +31,8 @@ public class Teleport extends MapItem implements Magic {
 		setCreature(false);
 		setPosition(x,y);
 		this.room = room;
+		setGenType(GeneralType.MAGIC);
+		setHidden(true);
 	}
 	
 	public void getCollected(Wizard wiz) {
@@ -51,8 +65,15 @@ public class Teleport extends MapItem implements Magic {
 		//o caster teleporta para alguma casa que esteja no seu campo de vis�o.
 	}
 	
-	public String toString() {
+	public String toBag() {
 		return "Teleport";
+	}
+	
+	public String toString() {
+		if(isHidden()) {
+			return "   ";
+		}
+		else return " T ";
 	}
 
 }

@@ -462,6 +462,38 @@ public class Game {
 				}
 			}
 		}
+		else if(option == 2) {
+			if(findItems()) {
+				System.out.println("Você encontrou tesouros!");
+				System.out.println("Gostaria de coletá-los?");
+				System.out.println("Pressione qualquer tecla para sim e 'n' para não");
+				char a = scan.next().charAt(0);
+				if (a == 'n') {
+					System.out.println("Você não coletou seus tesouros!");
+				}
+				else {
+					collectItems();
+					System.out.println("Observe a sua nova mochila:");
+					hero.getBag().printBag();
+					if(type == HeroType.WIZARD) {
+						((Wizard) hero).printMagics();
+					}
+					if(type == HeroType.ELF) {
+						((Elf) hero).printMagics();
+					}
+					
+				}
+				
+			}
+			else {
+				System.out.println("Você não encontrou tesouros!");
+			}
+		
+		}
+		
+		else if(option == 3 && (type == HeroType.ELF || type == HeroType.WIZARD)) {
+			System.out.println("Operação em Construção");
+		}
 	}
 	
 	public int combat(Hero h, Monster m) {
@@ -610,14 +642,6 @@ public class Game {
 				option = 1; 
 			}
 		}
-		System.out.println("Flag");
-			
-		if(option == 1) {
-			System.out.println("Você jogará com o mapa aleatório.");
-		}
-		if(option == 2) {
-			System.out.println("Você jogará com um mapa pré-definido carregado dos arquivos.");
-		}
 		
 		if(option == 1) {
 			System.out.printf("Parte iniciada. Boa sorte, %s!\n", nome);
@@ -643,6 +667,7 @@ public class Game {
 				map.map[25][18] = hero;
 				break;
 			}
+			randomInsertItens();
 			map.addHero(hero);
 		}
 		if(option == 2) {
@@ -759,6 +784,8 @@ public class Game {
 					case 'X':
 						map.map[i][j] = new SilverArmor(i,j);
 						break;
+					case 'T':
+						map.map[i][j] = new Teleport(i,j);
 					default:
 						continue;
 					}
@@ -835,7 +862,230 @@ public class Game {
 		
 		
 	}
+	
+	private void randomInsertItens() {
+		boolean successful = false;
+		int tempX, tempY;
+		
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new GoldArmor(tempX,tempY);
+				successful = true;
+			}
+		}
+		successful = false; 
+		
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new BroadSword(tempX,tempY);
+				successful = true;
+			}
+		}
+		
+		successful = false; 
+		
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new BronzeArmor(tempX,tempY);
+				successful = true;
+			}
+		}
+		
+		successful = false; 
+		
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new Daggers(tempX,tempY);
+				successful = true;
+			}
+		}
+		
+		if(type == HeroType.ELF || type == HeroType.WIZARD) {
+		successful = false; 
+		
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new Fireball(tempX,tempY);
+				successful = true;
+			}
+		}
+		
+		successful = false; 
+		
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new MagicMissile(tempX,tempY);
+				successful = true;
+			}
+		}
+		
+		successful = false; 
+		
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new SimpleHeal(tempX,tempY);
+				successful = true;
+			}
+		}
+		
+		successful = false;
+		
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new Teleport(tempX,tempY);
+				successful = true;
+			}
+		}
+		}
+		
+		successful = false; 
+		
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new Daggers(tempX,tempY);
+				successful = true;
+			}
+		}
+		
+		successful = false;
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new SilverArmor(tempX,tempY);
+				successful = true;
+			}
+		}
+		
+		successful = false;
+		
+		while(!successful) {
+			tempX = getRandomX();
+			tempY = getRandomY();
+			if(map.isPositionEmpty(tempX, tempY)) {
+				map.map[tempX][tempY] = new ShortSword(tempX,tempY);
+				successful = true;
+			}
+		}
+		
+		
+	}
+	
+	
+	public void collectItems() {
+		int x, y;
+		x = hero.getPositionX();
+		y= hero.getPositionY();
+		if(x+1 < map.getMapWidth() && map.isAnItem(x+1, y)) {
+			((Collectable) map.map[x+1][y]).getCollected(hero);
+		}
+		if(y+1 < map.getMapHeight() && map.isAnItem(x, y+1)) {
+			((Collectable) map.map[x][y+1]).getCollected(hero);
+		}
+		if(x-1 >=0 && map.isAnItem(x-1, y)) {
+			((Collectable) map.map[x-1][y]).getCollected(hero);
+		}
+		if(y-1 >= 0 && map.isAnItem(x, y-1)) {
+			((Collectable) map.map[x][y-1]).getCollected(hero);
+		}
+		
+		if(type == HeroType.ELF) {
+			if( x+1 < map.getMapWidth() && map.isAMagic(x+1, y)) {
+				((Elf) hero).addMagic((Magic) map.map[x+1][y]);
+			}
+			if(y+1 < map.getMapHeight() &&map.isAMagic(x, y+1)) {
+				((Elf) hero).addMagic((Magic) map.map[x][y+1]);
+			}
+			if( x-1 >=0 && map.isAMagic(x-1, y)) {
+				((Elf) hero).addMagic((Magic) map.map[x+1][y]);
+			}
+			if( y-1 >= 0 && map.isAMagic(x, y-1)) {
+				((Elf) hero).addMagic((Magic) map.map[x+1][y]);
+			}
+			
+		}
+		
+		if(type == HeroType.WIZARD) {
+			if( x+1 < map.getMapWidth() && map.isAMagic(x+1, y)) {
+				((Wizard) hero).addMagic((Magic) map.map[x+1][y]);
+			}
+			if(y+1 < map.getMapHeight() &&map.isAMagic(x, y+1)) {
+				((Wizard) hero).addMagic((Magic) map.map[x][y+1]);
+			}
+			if( x-1 >=0 && map.isAMagic(x-1, y)) {
+				((Wizard) hero).addMagic((Magic) map.map[x+1][y]);
+			}
+			if( y-1 >= 0 && map.isAMagic(x, y-1)) {
+				((Wizard) hero).addMagic((Magic) map.map[x+1][y]);
+			}
+			
+		}
 
+	}
+	
+	public boolean findItems() {
+		int x, y;
+		boolean found = false;
+		x = hero.getPositionX();
+		y= hero.getPositionY();
+		if(x+1 < map.getMapWidth() && map.isAnItem(x+1, y)) {
+			map.map[x+1][y].setHidden(false);
+			found = true;
+		}
+		if(y+1 < map.getMapHeight() && map.isAnItem(x, y+1)) {
+			map.map[x][y+1].setHidden(false);
+			found = true;
+		}
+		if(x-1 >=0 && map.isAnItem(x-1, y)) {
+			map.map[x-1][y].setHidden(false);
+			found = true;
+		}
+		if(y-1 >= 0 && map.isAnItem(x, y-1)) {
+			map.map[x][y-1].setHidden(false);
+			found = true;
+		}
+		
+		if(type == HeroType.ELF||type == HeroType.WIZARD) {
+			if( x+1 < map.getMapWidth() && map.isAMagic(x+1, y)){
+				map.map[x+1][y].setHidden(false);
+				found = true;
+			}
+			if( y+1 < map.getMapHeight() && map.isAMagic(x, y+1)) {
+				map.map[x][y+1].setHidden(false);
+				found = true;
+			}
+			if(x-1 >=0 && map.isAMagic(x-1, y)) {
+				map.map[x-1][y].setHidden(false);
+				found = true;
+			}
+			if(y-1 >= 0 && map.isAMagic(x, y-1)) {
+				map.map[x][y-1].setHidden(false);
+				found = true;
+			}
+			
+		}
+		
+		return found;
+	}
+	
 	
 
 }

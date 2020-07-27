@@ -8,7 +8,8 @@ public class MapItem {
 	protected boolean visible;
 	protected boolean creature;
 	protected boolean existsOnMap;
-
+	private GeneralType genType;
+	
 	public MapItem() {
 		this.x = x;
 		this.y = y;
@@ -83,9 +84,33 @@ public class MapItem {
 		return y;
 	}
 
+	public String toBag() {
+		String a = " ";
+		return a;
+	}
+	
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
 		existsOnMap = true;
 	}
+
+
+	public GeneralType getGenType() {
+		return genType;
+	}
+
+
+	public void setGenType(GeneralType genType) {
+		this.genType = genType;
+	}
+	
+	public boolean isHidden() {
+		return false;
+	}
+	
+	public void setHidden(boolean bool) {
+		
+	}
 }
+
