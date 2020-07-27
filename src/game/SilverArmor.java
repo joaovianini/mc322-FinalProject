@@ -8,6 +8,7 @@ public class SilverArmor extends Armor {
 		disappearAfterUse = false;
 		creature = false;
 		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public SilverArmor() {
@@ -16,6 +17,7 @@ public class SilverArmor extends Armor {
 		disappearAfterUse = false;
 		creature = false;
 		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 
 	public SilverArmor(int x, int y) {
@@ -25,6 +27,7 @@ public class SilverArmor extends Armor {
 		setPosition(x,y);
 		creature = false;
 		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public SilverArmor(int x, int y, int room) {
@@ -35,6 +38,7 @@ public class SilverArmor extends Armor {
 		creature = false;
 		this.room = room;
 		setGenType(GeneralType.ITEM);
+		setHidden(true);
 	}
 	
 	public String toBag() {

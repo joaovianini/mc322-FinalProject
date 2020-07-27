@@ -164,6 +164,7 @@ public class Game {
 	
 	
 		public void movement() {
+			//Observacao: Quando o heroi anda, se ele vai para uma posicao onde esta um tesouro, ele perde a oportunidade de coletar esse tesouro
 			int redDiceResult1, redDiceResult2, result, step, remaining, multiplier, backupX,backupY;
 			char direction;
 			String temp;
@@ -526,75 +527,6 @@ public class Game {
 		System.out.println();
 		System.out.println("HeroQuest");
 		System.out.println();
-		
-		System.out.println("Escolha um tipo de heroi:");
-		System.out.println("|1 - Barbaro|  |2 - Elfo|  |3 - Anao|  |4 - Mago|");
-		try{
-			if(scan.hasNextInt())
-				heroi = scan.nextInt();
-			else if(scan.hasNext()) {
-				String temp = scan.next();
-				System.out.printf("O valor %s inserido não é uma opção válida.\nTente Novamente!.\n", temp);
-				if(scan.hasNextInt())
-					heroi = scan.nextInt();
-				else if(scan.hasNext()) {
-					temp = scan.next();
-					System.out.printf("O valor %s inserido não é uma opção válida.\n Você jogará como o mago.\n", temp);
-					heroi = 4;
-				}
-			}
-			
-			switch(heroi) {
-			case 1:
-				type = HeroType.BARBARIAN;
-				break;
-			case 2:
-				type = HeroType.ELF;
-				break;
-			case 3:
-				type = HeroType.DWARF;
-				break;
-			case 4:
-				type = HeroType.WIZARD;
-				break;
-			default:
-				throw new IllegalArgumentException("Tipo Inválido de Herói.");
-			}
-		}
-		catch(IllegalArgumentException e) {
-			System.out.println("Você escolheu um tipo inválido de heroi");
-			System.out.println("Tente novamente!");
-			System.out.println("Escolha um tipo de heroi:");
-			System.out.println("|1 - Barbaro|  |2 - Elfo|  |3 - Anao|  |4 - Mago|");
-			if(scan.hasNextInt())
-				heroi = scan.nextInt();
-			else {
-				heroi = 5;
-				}
-			switch(heroi) {
-			case 1:
-				type = HeroType.BARBARIAN;
-				break;
-			case 2:
-				type = HeroType.ELF;
-				break;
-			case 3:
-				type = HeroType.DWARF;
-				break;
-			case 4:
-				type = HeroType.WIZARD;
-				break;
-			default:
-				System.out.println("Você escolheu novamente um tipo inválido.");
-				System.out.println("Você jogará como o mago.");
-				type = HeroType.WIZARD;
-				heroi = 4;
-			}
-		
-		}
-		
-		System.out.printf("Qual o nome do seu heroi: ");
-		String nome = scan.next();
 		System.out.println();
 		System.out.println("Escolha uma forma de jogo: ");
 		System.out.println("1. Mapa aleatório");
@@ -643,7 +575,78 @@ public class Game {
 			}
 		}
 		
+		
 		if(option == 1) {
+
+			System.out.println("Escolha um tipo de heroi:");
+			System.out.println("|1 - Barbaro|  |2 - Elfo|  |3 - Anao|  |4 - Mago|");
+			try{
+				if(scan.hasNextInt())
+					heroi = scan.nextInt();
+				else if(scan.hasNext()) {
+					String temp = scan.next();
+					System.out.printf("O valor %s inserido não é uma opção válida.\nTente Novamente!.\n", temp);
+					if(scan.hasNextInt())
+						heroi = scan.nextInt();
+					else if(scan.hasNext()) {
+						temp = scan.next();
+						System.out.printf("O valor %s inserido não é uma opção válida.\n Você jogará como o mago.\n", temp);
+						heroi = 4;
+					}
+				}
+				
+				switch(heroi) {
+				case 1:
+					type = HeroType.BARBARIAN;
+					break;
+				case 2:
+					type = HeroType.ELF;
+					break;
+				case 3:
+					type = HeroType.DWARF;
+					break;
+				case 4:
+					type = HeroType.WIZARD;
+					break;
+				default:
+					throw new IllegalArgumentException("Tipo Inválido de Herói.");
+				}
+			}
+			catch(IllegalArgumentException e) {
+				System.out.println("Você escolheu um tipo inválido de heroi");
+				System.out.println("Tente novamente!");
+				System.out.println("Escolha um tipo de heroi:");
+				System.out.println("|1 - Barbaro|  |2 - Elfo|  |3 - Anao|  |4 - Mago|");
+				if(scan.hasNextInt())
+					heroi = scan.nextInt();
+				else {
+					heroi = 5;
+					}
+				switch(heroi) {
+				case 1:
+					type = HeroType.BARBARIAN;
+					break;
+				case 2:
+					type = HeroType.ELF;
+					break;
+				case 3:
+					type = HeroType.DWARF;
+					break;
+				case 4:
+					type = HeroType.WIZARD;
+					break;
+				default:
+					System.out.println("Você escolheu novamente um tipo inválido.");
+					System.out.println("Você jogará como o mago.");
+					type = HeroType.WIZARD;
+					heroi = 4;
+				}
+			
+			}
+			
+			System.out.printf("Qual o nome do seu heroi: ");
+			String nome = scan.next();
+			System.out.println();
 			System.out.printf("Parte iniciada. Boa sorte, %s!\n", nome);
 			System.out.println("Pressione q a qualquer momento durante um movimento para encerrar o jogo");
 			map = new Map();
@@ -672,6 +675,7 @@ public class Game {
 		}
 		if(option == 2) {
 			buildMapFromFile();
+			System.out.printf("Parte iniciada. Boa sorte, %s!\n", hero.getName());
 		}
 		
 		while(!exit) {
@@ -734,6 +738,7 @@ public class Game {
 						break;
 					case 'U':
 						map.map[i][j] = new Door(i,j);
+						break;
 					case 'O':
 						map.map[i][j] = new GoldArmor(i,j);
 						break;
@@ -996,29 +1001,37 @@ public class Game {
 		y= hero.getPositionY();
 		if(x+1 < map.getMapWidth() && map.isAnItem(x+1, y)) {
 			((Collectable) map.map[x+1][y]).getCollected(hero);
+			map.map[x+1][y] = new EmptySpace(x+1, y);
 		}
 		if(y+1 < map.getMapHeight() && map.isAnItem(x, y+1)) {
 			((Collectable) map.map[x][y+1]).getCollected(hero);
+			map.map[x][y+1] = new EmptySpace(x, y+1);
 		}
 		if(x-1 >=0 && map.isAnItem(x-1, y)) {
 			((Collectable) map.map[x-1][y]).getCollected(hero);
+			map.map[x-1][y] = new EmptySpace(x-1, y);
 		}
 		if(y-1 >= 0 && map.isAnItem(x, y-1)) {
 			((Collectable) map.map[x][y-1]).getCollected(hero);
+			map.map[x][y-1] = new EmptySpace(x, y-1);
 		}
 		
 		if(type == HeroType.ELF) {
 			if( x+1 < map.getMapWidth() && map.isAMagic(x+1, y)) {
 				((Elf) hero).addMagic((Magic) map.map[x+1][y]);
+				map.map[x+1][y] = new EmptySpace(x+1, y);
 			}
 			if(y+1 < map.getMapHeight() &&map.isAMagic(x, y+1)) {
 				((Elf) hero).addMagic((Magic) map.map[x][y+1]);
+				map.map[x][y+1] = new EmptySpace(x, y+1);
 			}
 			if( x-1 >=0 && map.isAMagic(x-1, y)) {
 				((Elf) hero).addMagic((Magic) map.map[x+1][y]);
+				map.map[x-1][y] = new EmptySpace(x-1, y);
 			}
 			if( y-1 >= 0 && map.isAMagic(x, y-1)) {
 				((Elf) hero).addMagic((Magic) map.map[x+1][y]);
+				map.map[x][y-1] = new EmptySpace(x, y-1);
 			}
 			
 		}
@@ -1026,15 +1039,19 @@ public class Game {
 		if(type == HeroType.WIZARD) {
 			if( x+1 < map.getMapWidth() && map.isAMagic(x+1, y)) {
 				((Wizard) hero).addMagic((Magic) map.map[x+1][y]);
+				map.map[x+1][y] = new EmptySpace(x+1, y);
 			}
 			if(y+1 < map.getMapHeight() &&map.isAMagic(x, y+1)) {
 				((Wizard) hero).addMagic((Magic) map.map[x][y+1]);
+				map.map[x][y+1] = new EmptySpace(x, y+1);
 			}
 			if( x-1 >=0 && map.isAMagic(x-1, y)) {
 				((Wizard) hero).addMagic((Magic) map.map[x+1][y]);
+				map.map[x-1][y] = new EmptySpace(x-1, y);
 			}
 			if( y-1 >= 0 && map.isAMagic(x, y-1)) {
 				((Wizard) hero).addMagic((Magic) map.map[x+1][y]);
+				map.map[x][y-1] = new EmptySpace(x, y-1);
 			}
 			
 		}
