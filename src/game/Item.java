@@ -1,6 +1,6 @@
 package game;
 
-public class Item extends MapItem implements Collectable{
+public abstract class Item extends MapItem implements Collectable{
 	protected Creature owner;
 	private boolean hidden;
 	public boolean isHidden() {
@@ -10,11 +10,5 @@ public class Item extends MapItem implements Collectable{
 		this.hidden = hidden;
 	}
 	
-	public void getCollected(Hero hero) {
-		hero.bag.addItem(this);
-}
 
-	public void getCollected(Monster monster) {
-		monster.bag.addItem(this);
-	}
 }
